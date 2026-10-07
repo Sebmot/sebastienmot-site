@@ -49,6 +49,22 @@ Puis ouvrir [http://localhost:8080/sebastienmot-site/](http://localhost:8080/seb
 2. Ajouter les images éventuelles dans `img/`.
 3. Lancer `python3 build.py`.
 
+### Ajouter un post (script)
+
+```bash
+python3 scripts/add_post.py \
+  --source x \
+  --url "https://x.com/sebastienmot/status/…" \
+  --date 2026-10-07 \
+  --date-label "7 oct. 2026" \
+  --text "Titre du post\n\nCorps du texte…" \
+  --image-url "https://…/photo.png"   # optionnel
+```
+
+- Déduplication par `--url` (utiliser `--replace` pour mettre à jour un post existant).
+- Tri automatique : épinglés en premier, puis date décroissante.
+- Puis `python3 build.py` pour régénérer le site.
+
 Le générateur crée :
 
 - `dist/index.html` — accueil

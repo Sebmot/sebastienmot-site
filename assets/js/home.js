@@ -20,9 +20,8 @@ const PAGE = 6;
 const dataEl = document.getElementById("posts-data");
 if (!dataEl) return;
 
-const all = JSON.parse(dataEl.textContent)
-  .posts.slice()
-  .sort((a, b) => b.date.localeCompare(a.date));
+const rawPosts = JSON.parse(dataEl.textContent).posts.slice();
+const all = window.sortSitePosts ? window.sortSitePosts(rawPosts) : rawPosts;
 
 const esc = (s) =>
   s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
