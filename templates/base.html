@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>{{ page_title }}</title>
+  <meta name="description" content="{{ meta_description }}">
+  <link rel="canonical" href="{{ canonical }}">
+  <meta property="og:type" content="{{ og_type }}">
+  <meta property="og:url" content="{{ canonical }}">
+  <meta property="og:title" content="{{ page_title }}">
+  <meta property="og:description" content="{{ meta_description }}">
+  <meta property="og:locale" content="fr_BE">
+  <meta property="og:site_name" content="Sébastien Mot">
+  {% if og_image %}<meta property="og:image" content="{{ og_image }}">{% endif %}
+  <meta name="twitter:card" content="{% if og_image %}summary_large_image{% else %}summary{% endif %}">
+  <meta name="twitter:title" content="{{ page_title }}">
+  <meta name="twitter:description" content="{{ meta_description }}">
+  {% if og_image %}<meta name="twitter:image" content="{{ og_image }}">{% endif %}
+  <link rel="alternate" type="application/rss+xml" title="Sébastien Mot — Posts" href="{{ site_url }}/feed.xml">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/assets/css/site.css">
+  <link rel="stylesheet" href="/assets/css/post.css">
+  {% for block in head_extra %}{{ block|safe }}{% endfor %}
+</head>
+<body>
+<a class="skip-link" href="#main">Aller au contenu</a>
+<header class="site-header">
+  <a class="brand" href="{{ home_href }}"><span>SÉBASTIEN MOT</span></a>
+  <nav aria-label="Navigation">
+    <a href="{{ nav_posts }}">Posts</a>
+    <a href="{{ nav_ideas }}">Mes idées</a>
+    <a href="{{ nav_projects }}">Projets</a>
+  </nav>
+  <div class="nav-actions"><a class="nav-contact" href="mailto:seb@sebastienmot.com">Contact</a></div>
+</header>
+{{ body }}
+<footer class="site-footer">
+  <div class="footer-main">
+    <a class="brand" href="{{ home_href }}"><span>SÉBASTIEN MOT</span></a>
+    <p class="footer-meta">© {{ year }} Sébastien Mot · Dernière mise à jour {{ build_date_label }} · <a href="/posts/">Tous les posts</a></p>
+    {% if latest_posts %}
+    <p class="footer-latest">Récents :
+      {% for p in latest_posts %}
+      <a href="/posts/{{ p.slug }}/">{{ p.title_short }}</a>{% if not loop.last %} · {% endif %}
+      {% endfor %}
+    </p>
+    {% endif %}
+  </div>
+  <div>
+    <a href="https://x.com/sebastienmot" rel="noreferrer">X ↗</a>
+    <a href="https://www.linkedin.com/in/sebastienmot/" rel="noreferrer">LinkedIn ↗</a>
+    <a href="https://sebastienmot.com">sebastienmot.com</a>
+    <a href="{{ home_href }}">Haut de page ↑</a>
+  </div>
+</footer>
+{% for block in body_scripts %}{{ block|safe }}{% endfor %}
+</body>
+</html>
