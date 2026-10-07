@@ -1,0 +1,214 @@
+{
+ "_comment": "Ajouter un post : copier un objet de 'posts' et remplir source (x|linkedin), date (AAAA-MM-JJ, tri), dateLabel (affiché), url, image (chemin dans img/ ou null), cover (null ou {big, small} : visuel typographique si pas d'image), pinned, featured (un seul post vedette), text (texte complet, \\n = retour à la ligne, 1re ligne = titre). Puis : python3 build.py",
+ "posts": [
+  {
+   "source": "x",
+   "date": "2026-05-17",
+   "dateLabel": "17 mai 2026",
+   "url": "https://x.com/sebastienmot/status/2055900801273311350",
+   "image": "img/bureau.png",
+   "pinned": false,
+   "text": "Mon identité… mon bureau ❤️\n\nÊtre entrepreneur belge n’est pas simple.\n\nObligations.\nTaxation.\nDécisions prises par des gens qui n’ont parfois jamais construit une entreprise.\n\nMais avec le temps, j’ai compris quelque chose :\n\nPouvoir créer un environnement dans lequel tu te sens bien…\nça n’a pas de prix.\n\nÀ 44 ans, c’est devenu essentiel pour moi.\n\nEt oui, j’ai fait le choix d’avoir mon bureau de consultant chez moi 😉\nCertains voient ça comme un détail.\nMoi j’y vois une liberté.\n\nPas de costume 🤵\nPas de trajet imposé 🤯\nPas de bureau gris où tu attends 18h.\n\nJuste un espace pensé pour réfléchir, construire et développer.\n\nChaque objet ici raconte quelque chose :\n– le vélo → discipline\n– le calme → clarté\n– le minimalisme → focus\n\nQuand tu entreprends, tu ne construis pas juste un business.\nTu construis aussi ton environnement mental.\n\nEt aujourd’hui, mon équilibre vaut plus que beaucoup de choses.",
+   "featured": false,
+   "cover": null
+  },
+  {
+   "source": "x",
+   "date": "2026-09-04",
+   "dateLabel": "4 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2095751525981204586",
+   "image": null,
+   "pinned": false,
+   "text": "On reçoit actuellement dans notre boîte aux lettres une taxation silencieuse pour les propriétaires de biens immobiliers.\n\nLe fameux précompte immobilier, dont le coefficient d’indexation augmente tranquillement de +2,47 % en un an.\n\nCe n’est pas une nouvelle taxe.\nC’est mieux : une taxe qui augmente sans bruit.\n\nLe piège classique : voter une loi dite « temporaire », puis, une fois qu’elle est votée, l’indexer sans bruit.\n\nQui sont les voleurs ?\n\n#taxation #belgique",
+   "featured": false,
+   "cover": {
+    "big": "+2,47 %",
+    "small": "l'indexation du précompte immobilier"
+   }
+  },
+  {
+   "source": "x",
+   "date": "2026-09-06T07:40",
+   "dateLabel": "6 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2096473653512737137",
+   "image": null,
+   "pinned": false,
+   "text": "Et si on supprimait le métier de politicien en Belgique ?\n\nLa dette continue de grimper, et la solution : « Taxer encore plus. »\n\nLes 584,6 millions € que coûtent nos parlements belges sont injustifiés, c’est simple !\n\nEt pourtant, on continue d’endormir les entrepreneurs et les citoyens avec leurs fausses promesses.\n\nLa solution :\n\nRendre les responsabilités de notre pays à des citoyens responsables, à savoir les entrepreneurs.",
+   "featured": false,
+   "cover": {
+    "big": "584,6 M€",
+    "small": "le coût de nos parlements belges"
+   }
+  },
+  {
+   "source": "x",
+   "date": "2026-09-06T16:17",
+   "dateLabel": "6 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2096603734721671354",
+   "image": null,
+   "pinned": false,
+   "text": "À tous les étudiants : vos notes ne définissent pas votre valeur.\n\nÀ l’école, une erreur vous coûte des points.\n\nDans la vie, une erreur peut vous faire gagner de l’expérience.\n\nC’est l’une des différences qui m’a le plus marqué entre le système scolaire et l’entrepreneuriat.\n\nÀ l’école, on cherche souvent la bonne réponse.\n\nDans l’entrepreneuriat, on cherche surtout à comprendre pourquoi ça n’a pas fonctionné.\n\nOn teste.\nOn se trompe.\nOn analyse.\nOn recommence.\n\nEt parfois, on trouve.\n\nLe problème n’est donc pas de noter les étudiants.\n\nLe problème, c’est de leur faire croire qu’une mauvaise note signifie qu’ils sont mauvais.\n\nUne note mesure une performance à un moment donné. Elle ne mesure ni votre curiosité, ni votre capacité à apprendre, ni votre créativité, ni votre capacité à créer de la valeur.\n\nAlors si tes notes ne sont pas celles que tu espérais :\n\nne confonds jamais ton résultat avec ta valeur.\n\n#enseignement #belgique",
+   "featured": false,
+   "cover": {
+    "big": "Résultat ≠ valeur",
+    "small": "À tous les étudiants"
+   }
+  },
+  {
+   "source": "x",
+   "date": "2026-09-07",
+   "dateLabel": "7 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2096833018677613022",
+   "image": "img/chatgpt-pub.png",
+   "pinned": false,
+   "text": "Nouveau sur ChatGPT : de la pub 🙃\n\nBon… il faut bien rentabiliser un modèle qui coûte encore très cher à faire tourner. 😉\n\n#chatgpt",
+   "featured": false,
+   "cover": null
+  },
+  {
+   "source": "x",
+   "date": "2026-09-08T06:59",
+   "dateLabel": "8 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2097188053777367403",
+   "image": null,
+   "pinned": false,
+   "text": "Être prisonnier dans sa tête peut être pire qu’une douleur physique.\n\nJe connais la charge sportive.\nLes kilomètres.\nLa fatigue.\nLa douleur.\n\nMais la charge mentale, elle, ne se voit pas.\n\nEt parfois, le plus difficile n’est pas de pousser son corps jusqu’à ses limites.\n\nC’est de faire taire ce qui se passe dans sa tête.\n\n#chargementale",
+   "featured": false,
+   "cover": {
+    "big": "Charge mentale",
+    "small": "Elle ne se voit pas."
+   }
+  },
+  {
+   "source": "x",
+   "date": "2026-09-08T17:53",
+   "dateLabel": "8 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2097352727193940161",
+   "image": "img/ironman.png",
+   "pinned": false,
+   "text": "30 days to prepare for a Half Ironman. 😉\n\n#ironman",
+   "featured": false,
+   "cover": null
+  },
+  {
+   "source": "x",
+   "date": "2026-09-09",
+   "dateLabel": "9 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2097587013377478992",
+   "image": "img/mazout.png",
+   "pinned": false,
+   "text": "Et si vous achetiez votre mazout en DCA ? ⛽\n\nOn utilise le DCA pour investir, pourquoi ne pas l’utiliser aussi pour une dépense que l’on sait devoir payer ?\n\nAvec les variations du prix du mazout, acheter progressivement permet de lisser son prix d’achat plutôt que de subir le prix du jour lorsque la cuve est vide.\n\nJ’ai vu beaucoup d’entrepreneurs utiliser ce levier dans d’autres domaines que pour la bourse 😉\n\n#mazout #belgique",
+   "featured": false,
+   "cover": null
+  },
+  {
+   "source": "x",
+   "date": "2026-09-15",
+   "dateLabel": "15 sept. 2026",
+   "url": "https://x.com/sebastienmot/status/2099842311127454127",
+   "image": null,
+   "pinned": true,
+   "text": "Essence en Belgique : 2,058 €/L\n≈ 46,6 % du prix pour l’état le savais-tu ?\n\nSur 1 litre :\n• 0,600 € d’accises\n• 0,358 € de TVA\n• ≈ 0,958 € de taxes\n• ≈ 46,6 % du prix\n\nSur un plein de 50 L = 102,90 €\n≈ 47,90 € de taxes\n\nPresque la moitié de ton plein part en taxes",
+   "featured": false,
+   "cover": {
+    "big": "46,6 %",
+    "small": "du prix du litre pour l'État"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-10-06",
+   "dateLabel": "il y a 1 j",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7513115233750675456/",
+   "image": null,
+   "pinned": false,
+   "text": "Carburant à 121 € le plein : la clause que beaucoup d'entrepreneurs oublient dans leurs devis.\n\nOn parlait de tout et de rien quand quelqu'un nous a montré la photo de son plein de sans-plomb : 121 €.\nIl payait à peine plus de 100 € l'année précédente.\n\nTrès vite, chacun a commencé à comparer ses chiffres.\nJusqu'à ce qu'on me demande : « Et toi, tu ferais quoi dans ce cas ? »\n\nJe lui ai posé une seule question : « Quand as-tu signé tes devis ? »\n« Au printemps. »\n\nEt là, il a compris le problème.\n\nSon client continuait à payer le prix prévu au printemps, tandis que lui subissait depuis plusieurs mois la hausse de ses coûts.\n\nLa différence ? Elle ne figurait nulle part dans ses factures.\nElle disparaissait directement dans sa marge.\n\nC'est précisément pour cela qu'il peut être intéressant, selon l'activité et le contrat, de prévoir une clause d'indexation liée au carburant.\n\nLe principe est simple : si le prix de référence du carburant évolue, une partie du prix peut évoluer avec lui, à la hausse comme à la baisse, selon les modalités prévues au contrat.\n\nExemple :\n➡️ Devis établi avec un carburant à 1,70 €/L\n➡️ Quelques mois plus tard : 1,90 €/L\n➡️ Sans mécanisme d'indexation : la hausse est pour toi.\n➡️ Avec une clause correctement prévue : elle peut être répercutée selon la formule convenue.\n\nCe n'est pas une question de faire payer davantage ton client.\nC'est une question de ne pas découvrir six mois plus tard que tu as travaillé avec une marge que tu n'avais jamais prévue de sacrifier.\n\nEt toi, quand tes coûts augmentent après la signature d'un devis : tu les répercutes, ou tu les absorbes ?",
+   "featured": true,
+   "cover": {
+    "big": "121 €",
+    "small": "le plein de sans-plomb"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-09-30",
+   "dateLabel": "il y a 1 sem.",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7509233966814695424/",
+   "image": null,
+   "pinned": false,
+   "text": "La RTBF et De Standaard sont venus raconter notre parcours et notre présence aux Championnats du monde de Fortnite à Anvers.\n\nhttps://lnkd.in/es67Vd_f",
+   "featured": false,
+   "cover": {
+    "big": "Fortnite",
+    "small": "Global Championship · Anvers"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-08-08",
+   "dateLabel": "il y a 2 mois",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7489726733571608576/",
+   "image": null,
+   "pinned": false,
+   "text": "Un vrai enfer, la sortie était prévue pour durer entre 1 h 30 et 2 h \"run\".\n\nAprès 2 heures, je suis à l'arrêt, encore loin de la maison, et je me dis : « Bordel, comment je vais rentrer ? »\n\nLes doutes, les peurs, plus d'énergie... Et Noa qui m'attend à la maison. Je sais qu'il pense que je vais rentrer avant qu'il fasse noir. Mais là, je risque de rentrer quand il fera déjà nuit. Il va s'inquiéter, malgré son âge, on n'est jamais assez prudent lors d'une sortie. Tout peut arriver.\n\nEt ici, c'était bonjour les enfers !\n\nJ'ai marché, réfléchi, essayé de trotter... Rien.\n\nPuis je regarde autour de moi. Merci, Monsieur le fermier : un pommier ! Je prends une pomme, qui est d'ailleurs dix fois meilleure que celles du supermarché. J'hésite à la manger, mais je me lance, puis je marche, encore et encore.\n\nUne vraie lutte contre moi-même, que je n'avais plus connue depuis longtemps.\n\nEt puis je trotte... Ça tient. Je peux recourir et rentrer à la maison.\n\nQuelle dinguerie, cette situation ! Un dépassement de soi mental qui fait du bien, mais qui en dit aussi long sur notre capacité à nous dépasser.",
+   "featured": false,
+   "cover": {
+    "big": "2 heures",
+    "small": "et à l'arrêt, loin de la maison"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-08-07",
+   "dateLabel": "il y a 2 mois",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7489178783229497344/",
+   "image": null,
+   "pinned": false,
+   "text": "À 15 ans… la RTBF raconte son histoire.\n\nPendant que beaucoup cherchent encore leur voie, Noa a fondé son équipe esport et l'a menée jusqu'aux Championnats du monde de Fortnite.\n\nSon histoire est aujourd'hui mise en lumière par la RTBF.\n\nSi vous croyez que l'âge ne devrait jamais être une limite à l'ambition, prenez 3 minutes pour découvrir son parcours.\n\nUn simple partage ou un mot d'encouragement peut avoir un impact énorme pour un jeune entrepreneur qui travaille chaque jour pour réaliser son rêve.\n\nMerci pour votre soutien. 🙏\n\nhttps://lnkd.in/eJiVdQpr",
+   "featured": false,
+   "cover": {
+    "big": "15 ans",
+    "small": "la RTBF raconte son histoire"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-07-07",
+   "dateLabel": "il y a 3 mois",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7476271328971599872/",
+   "image": null,
+   "pinned": false,
+   "text": "J'ai reçu mon avertissement-extrait de rôle.\n\nJe tente ma chance par ici.\n\nÀ chaque fois que je pose cette question, j'ai droit aux mêmes réponses :\n\"C'est normal.\"\n\"C'est comme ça.\"\n\"Tout le monde paie.\"\n\nTrès bien.\nMais personne ne répond à la question.\n\nÀ quoi servent exactement mes impôts ?\n\nJe suis curieux de lire des réponses factuelles.",
+   "featured": false,
+   "cover": {
+    "big": "« C'est normal. »",
+    "small": "Toujours la même réponse"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-06-08",
+   "dateLabel": "il y a 4 mois",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7465310869174996992/",
+   "image": null,
+   "pinned": false,
+   "text": "On me dit que j'ai eu de la chance, et c'est vrai.\n\nJ'ai eu de la chance de travailler pendant que mes ami(e)s, connaissances et famille se défonçaient, profitaient tous les week-ends.\n\nJ'ai eu de la chance de faire 12 ans d'études pendant que les autres ont choisi de prendre un emploi dans une grosse société avec un salaire confortable à la clé.\n\nJ'ai eu de la chance de me lancer à 19 ans comme entrepreneur et d'éviter 2 faillites de ma société.\n\nJ'ai eu de la chance de garder le cap en tant qu'entrepreneur malgré le bruit de mes proches.\n\nJ'ai eu de la chance de ravaler mon ego avec des petits jobs complémentaires pour éviter la faillite de ma société.\n\nJ'ai eu de la chance de lire des livres au lieu de regarder Netflix en mangeant des chips.\n\nJ'ai eu de la chance de bosser et de continuer à avancer sur mon business au lieu d'abandonner.\n\nJ'ai eu de la chance d'étudier mes dépenses et d'augmenter mes marges pour atteindre ma liberté.\n\nJ'ai eu de la chance de vendre une partie de mon entreprise avant mes 42 ans.\n\nJ'ai eu de la chance… je peux continuer comme ça pendant des heures.\n\nMais la chance, tu l'as aussi !\nTu es né en Europe ?\nTu lis ce post ?\nTu ne meurs pas de faim ?\n\nTu vois, tu as aussi de la chance, comme moi, veinard.",
+   "featured": false,
+   "cover": {
+    "big": "19 ans",
+    "small": "je me lance comme entrepreneur"
+   }
+  },
+  {
+   "source": "linkedin",
+   "date": "2026-06-07",
+   "dateLabel": "il y a 4 mois",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7462028401894285312/",
+   "image": "img/bureau.png",
+   "pinned": false,
+   "text": "Mon identité… mon bureau.\n\nÊtre entrepreneur belge n'est pas simple.\n\nObligations.\nTaxation.\nDécisions prises par des gens qui n'ont parfois jamais construit une entreprise.\n\nMais avec le temps, j'ai compris quelque chose :\nPouvoir créer un environnement dans lequel tu te sens bien… ça n'a pas de prix.\n\nÀ 44 ans, c'est devenu essentiel pour moi.\n\nEt oui, j'ai fait le choix d'avoir mon bureau de consultant chez moi.\nCertains voient ça comme un détail.\nMoi j'y vois une liberté.\n\nPas de costume.\nPas de trajet imposé.\nPas de bureau gris où tu attends 18h.\n\nJuste un espace pensé pour réfléchir, construire et développer.\n\nChaque objet ici raconte quelque chose :\n– le vélo → discipline\n– le calme → clarté\n– le minimalisme → focus\n\nQuand tu entreprends, tu ne construis pas juste un business.\nTu construis aussi ton environnement mental.\n\nEt aujourd'hui, mon équilibre vaut plus que beaucoup de choses.",
+   "featured": false,
+   "cover": null
+  }
+ ]
+}
