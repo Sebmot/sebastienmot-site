@@ -1,4 +1,10 @@
 (() => {
+const BASE = document.documentElement.dataset.basePath || "";
+const bp = (path) => {
+  if (!path.startsWith("/")) path = "/" + path;
+  return `${BASE}${path}`;
+};
+
 document.documentElement.classList.add("js");
 requestAnimationFrame(() => document.documentElement.classList.add("is-loaded"));
 
@@ -36,7 +42,7 @@ function toggle(el, btn) {
 }
 
 function postHref(p) {
-  return p.slug ? `/posts/${p.slug}/` : p.url;
+  return p.slug ? bp(`/posts/${p.slug}/`) : p.url;
 }
 
 function renderFeat() {
@@ -46,7 +52,7 @@ function renderFeat() {
   const p = all.find((x) => x.featured);
   if (!p || (filter !== "all" && filter !== p.source)) return;
   const [t, b] = split(p);
-  const local = p.slug ? `<a class="src-link" href="/posts/${p.slug}/">Lire sur le site ↗</a>` : "";
+  const local = p.slug ? `<a class="src-link" href="${bp(`/posts/${p.slug}/`)}">Lire sur le site ↗</a>` : "";
   box.innerHTML = `<article class="feat"><div class="feat-body">
    <div class="badge">${ICON[p.source]}<span>À la une</span><span class="d">${NAME[p.source]} · ${esc(p.dateLabel)}</span></div>
    <h3><a href="${postHref(p)}">${esc(t)}</a></h3><p class="txt">${link(b)}</p>
@@ -60,7 +66,9 @@ function renderFeat() {
 }
 
 function mediaHtml(p, i) {
-  const imgPath = p.image ? (p.image.startsWith("/") ? p.image : `/${p.image.replace(/^img\//, "img/")}`) : null;
+  const imgPath = p.image
+    ? bp(p.image.startsWith("/") ? p.image : `/${p.image.replace(/^img\//, "img/")}`)
+    : null;
   if (imgPath) {
     return `<figure class="media"><img src="${imgPath}" alt="" loading="lazy" decoding="async"></figure>`;
   }

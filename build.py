@@ -2,7 +2,9 @@
 """Génère le site statique sebastienmot.com dans dist/."""
 from __future__ import annotations
 
+import argparse
 import json
+import os
 import re
 import shutil
 import unicodedata
@@ -15,8 +17,23 @@ from jinja2 import Environment, FileSystemLoader, select_autoescape
 
 ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
-SITE_URL = "https://sebastienmot.com"
+SITE_URL = os.environ.get("SITE_URL", "https://sebastienmot.com").rstrip("/")
 SOURCE_LABEL = {"x": "X", "linkedin": "LinkedIn"}
+
+
+def normalize_base_path(raw: str | None) -> str:
+    if not raw or raw.strip() in ("/", ".", ""):
+        return ""
+    path = raw.strip().rstrip("/")
+    if not path.startswith("/"):
+        path = "/" + path
+    return path
+
+
+def site_href(base_path: str, path: str) -> str:
+    if not path.startswith("/"):
+        path = "/" + path
+    return f"{base_path}{path}" if base_path else path
 
 
 def slugify(text: str) -> str:
@@ -43,9 +60,6 @@ def assign_slugs(posts: list[dict]) -> list[dict]:
         n = seen.get(base, 0)
         seen[base] = n + 1
         slug = base if n == 0 else f"{base}-{n + 1}"
-        date_iso = post["date"][:10]
-        if "T" in post["date"]:
-            date_iso = post["date"].replace("T", " ")[:16]
         enriched.append(
             {
                 **post,
@@ -179,7 +193,27 @@ def write_llms(path: Path, posts: list[dict], full: bool) -> None:
         path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+def parse_args() -> argparse.Namespace:
+    parser = argparse.ArgumentParser(description="Génère le site statique dans dist/")
+    parser.add_argument(
+        "--base-path",
+        default=os.environ.get("BASE_PATH", ""),
+        help="Préfixe des URLs internes (ex. /sebastienmot-site pour GitHub Pages projet)",
+    )
+    parser.add_argument(
+        "--write-cname",
+        action="store_true",
+        default=os.environ.get("WRITE_CNAME", "").lower() in ("1", "true", "yes"),
+        help="Écrire dist/CNAME (domaine personnalisé). Désactivé par défaut.",
+    )
+    return parser.parse_args()
+
+
 def main() -> None:
+    args = parse_args()
+    base_path = normalize_base_path(args.base_path)
+    href = lambda path: site_href(base_path, path)  # noqa: E731
+
     build_dt = datetime.now(timezone.utc)
     build_date_label = build_dt.astimezone().strftime("%d/%m/%Y")
     year = build_dt.year
@@ -193,11 +227,14 @@ def main() -> None:
 
     shutil.copytree(ROOT / "img", DIST / "img")
     shutil.copytree(ROOT / "assets", DIST / "assets")
+    (DIST / ".nojekyll").write_text("", encoding="utf-8")
 
     env = Environment(
         loader=FileSystemLoader(ROOT / "templates"),
         autoescape=select_autoescape(["html", "xml"]),
     )
+    env.globals["href"] = href
+    env.globals["base_path"] = base_path
 
     latest = [
         {"slug": p["slug"], "title_short": (p["title"][:42] + "…") if len(p["title"]) > 45 else p["title"]}
@@ -209,22 +246,44 @@ def main() -> None:
         "year": year,
         "build_date_label": build_date_label,
         "latest_posts": latest,
+        "base_path": base_path,
+        "href": href,
     }
 
     nav_home = {
-        "home_href": "/",
-        "nav_posts": "/#posts",
-        "nav_ideas": "/#idees",
-        "nav_projects": "/#projets",
+        "home_href": href("/"),
+        "nav_posts": href("/") + "#posts",
+        "nav_ideas": href("/") + "#idees",
+        "nav_projects": href("/") + "#projets",
     }
     nav_inner = {
-        "home_href": "/",
-        "nav_posts": "/posts/",
-        "nav_ideas": "/#idees",
-        "nav_projects": "/#projets",
+        "home_href": href("/"),
+        "nav_posts": href("/posts/"),
+        "nav_ideas": href("/") + "#idees",
+        "nav_projects": href("/") + "#projets",
     }
 
-    posts_payload = {"posts": [{k: p[k] for k in ("source", "date", "dateLabel", "url", "image", "pinned", "featured", "text", "cover", "slug") if k in p} for p in posts]}
+    posts_payload = {
+        "posts": [
+            {
+                k: p[k]
+                for k in (
+                    "source",
+                    "date",
+                    "dateLabel",
+                    "url",
+                    "image",
+                    "pinned",
+                    "featured",
+                    "text",
+                    "cover",
+                    "slug",
+                )
+                if k in p
+            }
+            for p in posts
+        ]
+    }
     posts_json = json.dumps(posts_payload, ensure_ascii=False).replace("</", "<\\/")
 
     person_ld = {
@@ -264,7 +323,7 @@ def main() -> None:
         ],
         body_scripts=[
             f'<script id="posts-data" type="application/json">{posts_json}</script>',
-            '<script src="/assets/js/home.js" defer></script>',
+            f'<script src="{href("/assets/js/home.js")}" defer></script>',
         ],
         **common,
         **nav_home,
@@ -337,13 +396,15 @@ def main() -> None:
     write_rss(DIST / "feed.xml", posts, build_dt)
     write_llms(DIST / "llms.txt", posts, full=False)
     write_llms(DIST / "llms-full.txt", posts, full=True)
-    (DIST / "CNAME").write_text("sebastienmot.com\n", encoding="utf-8")
 
-    # Legacy maquette for reference
+    if args.write_cname:
+        (DIST / "CNAME").write_text("sebastienmot.com\n", encoding="utf-8")
+
     legacy = (ROOT / "template.html").read_text(encoding="utf-8").replace("/*POSTS_JSON*/", posts_json)
     (ROOT / "maquette.html").write_text(legacy, encoding="utf-8")
 
-    print(f"dist/ : {len(posts)} posts · {build_date_label}")
+    base_label = base_path or "/"
+    print(f"dist/ : {len(posts)} posts · base_path={base_label} · CNAME={'oui' if args.write_cname else 'non'}")
 
 
 if __name__ == "__main__":

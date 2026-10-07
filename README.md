@@ -11,13 +11,28 @@ pip install -r requirements.txt
 python3 build.py
 ```
 
-Le site généré se trouve dans `dist/`. Pour prévisualiser :
+### Chemin de base (`BASE_PATH`)
+
+Les liens internes et assets sont préfixés par `BASE_PATH` (variable d’environnement ou `--base-path`) :
+
+| Déploiement | Commande |
+|-------------|----------|
+| Domaine racine `sebastienmot.com` | `python3 build.py` |
+| GitHub Pages projet | `BASE_PATH=/sebastienmot-site python3 build.py` |
+
+Les URL **canoniques**, Open Graph, sitemap, RSS et `llms*.txt` restent sur `https://sebastienmot.com`.
+
+**Domaine personnalisé :** quand le DNS pointe vers GitHub Pages, builder avec `WRITE_CNAME=1` (ou `python3 build.py --write-cname`) et `BASE_PATH` vide ; retirer `BASE_PATH` du workflow.
+
+Le site généré se trouve dans `dist/`. Prévisualisation GitHub Pages (sous-chemin) :
 
 ```bash
-cd dist && python3 -m http.server 8080
+BASE_PATH=/sebastienmot-site python3 build.py
+rm -rf preview && mkdir -p preview/sebastienmot-site && cp -r dist/* preview/sebastienmot-site/
+cd preview && python3 -m http.server 8080
 ```
 
-Puis ouvrir [http://localhost:8080](http://localhost:8080).
+Puis ouvrir [http://localhost:8080/sebastienmot-site/](http://localhost:8080/sebastienmot-site/).
 
 ## Ajouter un post
 
@@ -56,4 +71,4 @@ Le générateur crée :
 
 ## Déploiement
 
-À chaque push sur `main`, GitHub Actions exécute `build.py` et publie `dist/` sur GitHub Pages. Le fichier `dist/CNAME` contient `sebastienmot.com` (DNS géré en dehors du dépôt).
+À chaque push sur `main`, GitHub Actions exécute `build.py` avec `BASE_PATH=/sebastienmot-site` et publie `dist/` sur GitHub Pages. Le fichier `CNAME` n’est **pas** généré tant que le domaine n’est pas connecté ; activer avec `WRITE_CNAME=1` (voir `CNAME.example`).
