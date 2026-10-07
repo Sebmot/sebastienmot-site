@@ -15,6 +15,8 @@ from pathlib import Path
 
 from jinja2 import Environment, FileSystemLoader, select_autoescape
 
+from site_posts import sort_posts
+
 ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
 SITE_URL = os.environ.get("SITE_URL", "https://sebastienmot.com").rstrip("/")
@@ -72,8 +74,7 @@ def assign_slugs(posts: list[dict]) -> list[dict]:
                 "excerpt": re.sub(r"\s+", " ", body)[:180] + ("…" if len(body) > 180 else ""),
             }
         )
-    enriched.sort(key=lambda p: p["date"], reverse=True)
-    return enriched
+    return sort_posts(enriched)
 
 
 def json_ld_script(data: dict) -> str:
@@ -82,6 +83,80 @@ def json_ld_script(data: dict) -> str:
         + json.dumps(data, ensure_ascii=False, separators=(",", ":"))
         + "</script>"
     )
+
+
+REQUIRED_MAILTO = "mailto:seb@sebastienmot.com"
+REQUIRED_EXTERNAL = (
+    "https://x.com/sebastienmot",
+    "https://www.linkedin.com/in/sebastienmot/",
+    "https://nezo.finance",
+)
+ATTR_RE = re.compile(r"""(?:href|src)=["']([^"']+)["']""")
+
+
+def resolve_internal_file(dist: Path, base_path: str, url: str) -> Path | None:
+    if not url or url.startswith("#") or url.startswith(("mailto:", "tel:", "javascript:", "data:")):
+        return None
+    if url.startswith("http"):
+        return None
+    path = url.split("?", 1)[0].split("#", 1)[0]
+    if base_path and path.startswith(base_path):
+        path = path[len(base_path) :] or "/"
+    rel = path.lstrip("/")
+    if not rel:
+        candidate = dist / "index.html"
+        return candidate if candidate.is_file() else None
+    direct = dist / rel
+    if direct.is_file():
+        return direct
+    if direct.is_dir() and (direct / "index.html").is_file():
+        return direct / "index.html"
+    index_candidate = dist / rel / "index.html"
+    if index_candidate.is_file():
+        return index_candidate
+    if rel.endswith("/"):
+        index_candidate = dist / rel / "index.html"
+        return index_candidate if index_candidate.is_file() else None
+    return None
+
+
+def verify_links(dist: Path, base_path: str, posts: list[dict]) -> None:
+    errors: list[str] = []
+    html_files = sorted(dist.rglob("*.html"))
+    combined = "".join(p.read_text(encoding="utf-8") for p in html_files)
+
+    if REQUIRED_MAILTO not in combined:
+        errors.append(f"Contact mailto manquant ({REQUIRED_MAILTO})")
+    for ext in REQUIRED_EXTERNAL:
+        if ext not in combined:
+            errors.append(f"Lien externe attendu absent : {ext}")
+
+    for p in posts:
+        if p["url"] not in combined:
+            errors.append(f"URL source absente du site : {p['url']}")
+
+    for html_path in html_files:
+        text = html_path.read_text(encoding="utf-8")
+        for match in ATTR_RE.finditer(text):
+            url = match.group(1)
+            target = resolve_internal_file(dist, base_path, url)
+            if target is None:
+                continue
+            if not target.is_file():
+                errors.append(f"{html_path.relative_to(dist)}: 404 interne → {url}")
+
+    for asset in (
+        "assets/css/site.css",
+        "assets/css/post.css",
+        "assets/js/home.js",
+        "assets/js/posts-sort.js",
+        "assets/js/posts-archive.js",
+    ):
+        if not (dist / asset).is_file():
+            errors.append(f"Asset manquant : {asset}")
+
+    if errors:
+        raise SystemExit("Vérification des liens échouée :\n  " + "\n  ".join(errors))
 
 
 def verify_html_output(dist: Path) -> None:
@@ -168,7 +243,7 @@ def write_llms(path: Path, posts: list[dict], full: bool) -> None:
             "",
             "## Qui est Sébastien Mot",
             "",
-            "Entrepreneur belge depuis plus de vingt-cinq ans, en contact direct avec dirigeants "
+            "Entrepreneur belge depuis plus de 25 ans, en contact direct avec dirigeants "
             "et PME. Il partage sur l'argent, les décisions et l'entrepreneuriat, sans formation "
             "à vendre ni promesse de liberté financière. Projet en cours : NEZO.finance.",
             "",
@@ -190,7 +265,7 @@ def write_llms(path: Path, posts: list[dict], full: bool) -> None:
             "",
             f"> {SITE_URL} — D'entrepreneur à entrepreneur.",
             "",
-            "Sébastien Mot aide à comprendre l'argent pour mieux décider. Vingt-cinq ans aux côtés "
+            "Sébastien Mot aide à comprendre l'argent pour mieux décider. 25 ans aux côtés "
             "de dirigeants belges. Posts X et LinkedIn en français.",
             "",
             "## Liens",
@@ -338,6 +413,7 @@ def main() -> None:
         ],
         body_scripts=[
             f'<script id="posts-data" type="application/json">{posts_json}</script>',
+            f'<script src="{href("/assets/js/posts-sort.js")}" defer></script>',
             f'<script src="{href("/assets/js/home.js")}" defer></script>',
         ],
         **common,
@@ -355,7 +431,11 @@ def main() -> None:
         og_type="website",
         og_image=None,
         head_extra=[json_ld_script(website_ld)],
-        body_scripts=[],
+        body_scripts=[
+            f'<script id="posts-data" type="application/json">{posts_json}</script>',
+            f'<script src="{href("/assets/js/posts-sort.js")}" defer></script>',
+            f'<script src="{href("/assets/js/posts-archive.js")}" defer></script>',
+        ],
         **common,
         **nav_inner,
     )
@@ -416,6 +496,7 @@ def main() -> None:
         (DIST / "CNAME").write_text("sebastienmot.com\n", encoding="utf-8")
 
     verify_html_output(DIST)
+    verify_links(DIST, base_path, posts)
 
     legacy = (ROOT / "template.html").read_text(encoding="utf-8").replace("/*POSTS_JSON*/", posts_json)
     (ROOT / "maquette.html").write_text(legacy, encoding="utf-8")

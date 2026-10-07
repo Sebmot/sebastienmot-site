@@ -6,18 +6,13 @@
         <h1 class="h2">Tous les posts</h1>
         <p class="lead">Mes publications X et LinkedIn, classées par date.</p>
       </div>
+      <div class="filters" role="group" aria-label="Filtrer les posts">
+        <button data-f="all" aria-pressed="true" type="button">Tous <span class="n" data-c="all"></span></button>
+        <button data-f="x" aria-pressed="false" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.9 2H22l-6.8 7.8L23 22h-6.2l-4.8-6.3L6.4 22H3.3l7.3-8.3L1 2h6.3l4.4 5.8L18.9 2zm-1.1 18h1.7L6.3 3.9H4.5L17.8 20z"/></svg> X <span class="n" data-c="x"></span></button>
+        <button data-f="linkedin" aria-pressed="false" type="button"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4.98 3.5a2.5 2.5 0 11-.02 5 2.5 2.5 0 01.02-5zM3 9.75h4V21H3V9.75zM9.5 9.75h3.8v1.6h.06c.53-1 1.83-2.06 3.77-2.06 4.03 0 4.77 2.65 4.77 6.1V21h-4v-5.07c0-1.21-.02-2.77-1.69-2.77-1.69 0-1.95 1.32-1.95 2.68V21h-4V9.75z"/></svg> LinkedIn <span class="n" data-c="linkedin"></span></button>
+      </div>
     </header>
-    <ol class="posts-archive">
-      {% for p in posts %}
-      <li>
-        <article>
-          <p class="meta-line"><span class="src {{ p.source }}">{{ p.source_label }}</span> · <time datetime="{{ p.date_iso }}">{{ p.dateLabel }}</time>{% if p.pinned %} · <span class="pin">Épinglé</span>{% endif %}</p>
-          <h2><a href="{{ href('/posts/' ~ p.slug ~ '/') }}">{{ p.title }}</a></h2>
-          <p class="excerpt">{{ p.excerpt }}</p>
-        </article>
-      </li>
-      {% endfor %}
-    </ol>
+    <ol class="posts-archive" id="posts-archive"></ol>
     <p class="back-home"><a href="{{ href('/') }}">← Retour à l'accueil</a></p>
   </section>
 </main>
