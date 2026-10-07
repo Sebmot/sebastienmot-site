@@ -12,12 +12,12 @@
       <li>
         <article>
           <p class="meta-line"><span class="src {{ p.source }}">{{ p.source_label }}</span> · <time datetime="{{ p.date_iso }}">{{ p.dateLabel }}</time>{% if p.pinned %} · <span class="pin">Épinglé</span>{% endif %}</p>
-          <h2><a href="/posts/{{ p.slug }}/">{{ p.title }}</a></h2>
+          <h2><a href="{{ href('/posts/' ~ p.slug ~ '/') }}">{{ p.title }}</a></h2>
           <p class="excerpt">{{ p.excerpt }}</p>
         </article>
       </li>
       {% endfor %}
     </ol>
-    <p class="back-home"><a href="/">← Retour à l'accueil</a></p>
+    <p class="back-home"><a href="{{ href('/') }}">← Retour à l'accueil</a></p>
   </section>
 </main>

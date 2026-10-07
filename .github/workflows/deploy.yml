@@ -16,24 +16,29 @@ concurrency:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
+    env:
+      # GitHub Pages (projet) : https://sebmot.github.io/sebastienmot-site/
+      BASE_PATH: /sebastienmot-site
+      # Domaine personnalisé : BASE_PATH vide + WRITE_CNAME=1 quand le DNS est prêt
+      WRITE_CNAME: "0"
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - uses: actions/checkout@v5
+      - uses: actions/setup-python@v6
         with:
           python-version: "3.12"
       - name: Install dependencies
         run: pip install -r requirements.txt
       - name: Build site
-        run: python3 build.py
+        run: python3 build.py --base-path "${BASE_PATH}"
       - name: Upload Pages artifact
-        uses: actions/upload-pages-artifact@v3
+        uses: actions/upload-pages-artifact@v4
         with:
           path: dist
 
   deploy:
     needs: build
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-24.04
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}

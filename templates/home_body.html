@@ -12,7 +12,7 @@
   <div class="hero-name" aria-hidden="true">SEB MOT</div>
   <figure class="portrait-stage" aria-label="Photo de Sébastien Mot">
     <div class="orbit-depth" aria-hidden="true"><div class="orbit-lines"><span></span><span></span><span></span></div></div>
-    <div class="arch"><picture><source srcset="/img/seb.webp" type="image/webp"><img class="seb" src="/img/seb.png" alt="Sébastien Mot" width="900" height="925" fetchpriority="high"></picture></div>
+    <div class="arch"><picture><source srcset="{{ href('/img/seb.webp') }}" type="image/webp"><img class="seb" src="{{ href('/img/seb.png') }}" alt="Sébastien Mot" width="900" height="925" fetchpriority="high"></picture></div>
   </figure>
 </div></section>
 
@@ -45,7 +45,7 @@
   <div class="post-grid" id="post-grid"></div>
   <div class="more-wrap" id="more-wrap"><button class="btn-load" id="btn-load" type="button"></button></div>
   <noscript>
-    <p class="lead"><a href="/posts/">Voir tous les posts ({{ post_count }})</a></p>
+    <p class="lead"><a href="{{ href('/posts/') }}">Voir tous les posts ({{ post_count }})</a></p>
   </noscript>
 </section>
 

@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-base-path="{{ base_path }}">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width,initial-scale=1">
@@ -21,8 +21,8 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <link rel="stylesheet" href="/assets/css/site.css">
-  <link rel="stylesheet" href="/assets/css/post.css">
+  <link rel="stylesheet" href="{{ href('/assets/css/site.css') }}">
+  <link rel="stylesheet" href="{{ href('/assets/css/post.css') }}">
   {% for block in head_extra %}{{ block|safe }}{% endfor %}
 </head>
 <body>
@@ -40,11 +40,11 @@
 <footer class="site-footer">
   <div class="footer-main">
     <a class="brand" href="{{ home_href }}"><span>SÉBASTIEN MOT</span></a>
-    <p class="footer-meta">© {{ year }} Sébastien Mot · Dernière mise à jour {{ build_date_label }} · <a href="/posts/">Tous les posts</a></p>
+    <p class="footer-meta">© {{ year }} Sébastien Mot · Dernière mise à jour {{ build_date_label }} · <a href="{{ href('/posts/') }}">Tous les posts</a></p>
     {% if latest_posts %}
     <p class="footer-latest">Récents :
       {% for p in latest_posts %}
-      <a href="/posts/{{ p.slug }}/">{{ p.title_short }}</a>{% if not loop.last %} · {% endif %}
+      <a href="{{ href('/posts/' ~ p.slug ~ '/') }}">{{ p.title_short }}</a>{% if not loop.last %} · {% endif %}
       {% endfor %}
     </p>
     {% endif %}
