@@ -22,6 +22,8 @@ Les liens internes et assets sont préfixés par `BASE_PATH` (variable d’envir
 
 Les URL **canoniques**, Open Graph, sitemap, RSS et `llms*.txt` restent sur `https://sebastienmot.com`.
 
+**Contrôle des liens au build :** les liens internes sont toujours bloquants. En CI (`GITHUB_ACTIONS`), les contrôles externes (présence dans le HTML) ne font qu’avertir. Les requêtes HTTP vers X/LinkedIn ne sont **jamais** lancées en CI ; en local, option `LINK_CHECK_HTTP=1` (timeout 5 s par URL).
+
 **Domaine personnalisé :** quand le DNS pointe vers GitHub Pages, builder avec `WRITE_CNAME=1` (ou `python3 build.py --write-cname`) et `BASE_PATH` vide ; retirer `BASE_PATH` du workflow.
 
 Le site généré se trouve dans `dist/`. Prévisualisation GitHub Pages (sous-chemin) :

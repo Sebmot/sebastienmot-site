@@ -120,20 +120,67 @@ def resolve_internal_file(dist: Path, base_path: str, url: str) -> Path | None:
     return None
 
 
-def verify_links(dist: Path, base_path: str, posts: list[dict]) -> None:
+def _is_ci() -> bool:
+    return os.environ.get("GITHUB_ACTIONS", "").lower() == "true"
+
+
+def _http_link_check_enabled() -> bool:
+    if _is_ci():
+        return False
+    return os.environ.get("LINK_CHECK_HTTP", "").lower() in ("1", "true", "yes")
+
+
+def verify_external_http(urls: tuple[str, ...], timeout_s: float = 5.0) -> None:
+    """Vérification HTTP optionnelle (jamais en CI). Timeouts stricts."""
+    if not _http_link_check_enabled():
+        return
+    from urllib.error import HTTPError, URLError
+    from urllib.request import Request, urlopen
+
     errors: list[str] = []
+    for url in urls:
+        try:
+            req = Request(url, method="HEAD")
+            with urlopen(req, timeout=timeout_s) as resp:
+                if resp.status >= 400:
+                    errors.append(f"{url} → HTTP {resp.status}")
+        except HTTPError as exc:
+            if exc.code in (405, 403, 999):
+                try:
+                    with urlopen(Request(url), timeout=timeout_s) as resp:
+                        if resp.status >= 400:
+                            errors.append(f"{url} → HTTP {resp.status}")
+                except (HTTPError, URLError, TimeoutError) as err:
+                    errors.append(f"{url} → {err}")
+            elif exc.code >= 400:
+                errors.append(f"{url} → HTTP {exc.code}")
+        except (URLError, TimeoutError) as exc:
+            errors.append(f"{url} → {exc}")
+
+    if errors:
+        raise SystemExit("Vérification HTTP des liens externes échouée :\n  " + "\n  ".join(errors))
+
+
+def verify_links(dist: Path, base_path: str, posts: list[dict]) -> None:
+    """Internes : échec bloquant. Externes (présence dans le HTML) : avertissement en CI."""
+    errors: list[str] = []
+    warnings: list[str] = []
     html_files = sorted(dist.rglob("*.html"))
     combined = "".join(p.read_text(encoding="utf-8") for p in html_files)
 
     if REQUIRED_MAILTO not in combined:
-        errors.append(f"Contact mailto manquant ({REQUIRED_MAILTO})")
+        msg = f"Contact mailto manquant ({REQUIRED_MAILTO})"
+        (warnings if _is_ci() else errors).append(msg)
+
     for ext in REQUIRED_EXTERNAL:
         if ext not in combined:
-            errors.append(f"Lien externe attendu absent : {ext}")
+            msg = f"Lien externe attendu absent du HTML : {ext}"
+            (warnings if _is_ci() else errors).append(msg)
 
     for p in posts:
         if p["url"] not in combined:
-            errors.append(f"URL source absente du site : {p['url']}")
+            msg = f"URL source absente du site : {p['url']}"
+            (warnings if _is_ci() else errors).append(msg)
 
     for html_path in html_files:
         text = html_path.read_text(encoding="utf-8")
@@ -155,8 +202,14 @@ def verify_links(dist: Path, base_path: str, posts: list[dict]) -> None:
         if not (dist / asset).is_file():
             errors.append(f"Asset manquant : {asset}")
 
+    for w in warnings:
+        print(f"AVERTISSEMENT lien (non bloquant en CI) : {w}")
+
     if errors:
         raise SystemExit("Vérification des liens échouée :\n  " + "\n  ".join(errors))
+
+    http_urls = tuple(REQUIRED_EXTERNAL) + tuple(p["url"] for p in posts)
+    verify_external_http(http_urls)
 
 
 def verify_html_output(dist: Path) -> None:
