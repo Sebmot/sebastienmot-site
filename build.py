@@ -84,6 +84,21 @@ def json_ld_script(data: dict) -> str:
     )
 
 
+def verify_html_output(dist: Path) -> None:
+    """Échoue si du HTML de gabarit a été double-échappé dans les pages."""
+    bad_markers = ("&lt;main", "&lt;section", "&lt;article")
+    errors: list[str] = []
+    for path in sorted(dist.rglob("*.html")):
+        text = path.read_text(encoding="utf-8")
+        for marker in bad_markers:
+            if marker in text:
+                errors.append(f"{path.relative_to(dist)}: {marker}")
+        if '<main id="main"' not in text:
+            errors.append(f"{path.relative_to(dist)}: balise <main> absente")
+    if errors:
+        raise SystemExit("HTML échappé ou invalide dans dist/:\n  " + "\n  ".join(errors))
+
+
 def render_page(env: Environment, template_name: str, **ctx) -> str:
     return env.get_template("base.html").render(
         body=env.get_template(template_name).render(**ctx),
@@ -399,6 +414,8 @@ def main() -> None:
 
     if args.write_cname:
         (DIST / "CNAME").write_text("sebastienmot.com\n", encoding="utf-8")
+
+    verify_html_output(DIST)
 
     legacy = (ROOT / "template.html").read_text(encoding="utf-8").replace("/*POSTS_JSON*/", posts_json)
     (ROOT / "maquette.html").write_text(legacy, encoding="utf-8")
