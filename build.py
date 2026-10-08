@@ -427,7 +427,7 @@ CONVICTIONS = (
 ABOUT_FACTS = (
     "Sébastien Mot est un entrepreneur libre belge, basé à Bruxelles.",
     "Depuis 25 ans, il travaille en face des dirigeants : plus de 500 indépendants et dirigeants "
-    "de PME en Belgique, et 2 faillites évitées.",
+    "de PME en Belgique. Entrepreneur depuis ses 19 ans, il a lui-même évité 2 faillites à sa société.",
     "Il est le fondateur de NEZO.finance (https://nezo.finance), une application qui réunit le cash, "
     "le patrimoine et les échéances d'un entrepreneur, pro comme privé, dans une seule vue.",
     "Il écrit en français, sur X et LinkedIn, sur les finances d'entrepreneur : trésorerie, fiscalité belge, "
