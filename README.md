@@ -90,3 +90,5 @@ Le générateur crée :
 ## Déploiement
 
 À chaque push sur `main`, GitHub Actions exécute `build.py` avec `BASE_PATH=/sebastienmot-site` et publie `dist/` sur GitHub Pages. Le fichier `CNAME` n’est **pas** généré tant que le domaine n’est pas connecté ; activer avec `WRITE_CNAME=1` (voir `CNAME.example`).
+
+**Domaine actif :** le fichier `CNAME` à la racine du dépôt (contenu `sebastienmot.com`) active le mode domaine dans `build.py` : URLs à la racine et `dist/CNAME`, quel que soit `BASE_PATH` dans le workflow.

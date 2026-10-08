@@ -354,6 +354,13 @@ def parse_args() -> argparse.Namespace:
 
 def main() -> None:
     args = parse_args()
+    # Domaine personnalisé : un fichier CNAME à la racine du dépôt active le mode
+    # domaine (URLs à la racine + dist/CNAME), quel que soit BASE_PATH du workflow.
+    cname_file = ROOT / "CNAME"
+    custom_domain = cname_file.read_text(encoding="utf-8").strip() if cname_file.exists() else ""
+    if custom_domain:
+        args.base_path = ""
+        args.write_cname = True
     base_path = normalize_base_path(args.base_path)
     href = lambda path: site_href(base_path, path)  # noqa: E731
 
@@ -546,7 +553,7 @@ def main() -> None:
     write_llms(DIST / "llms-full.txt", posts, full=True)
 
     if args.write_cname:
-        (DIST / "CNAME").write_text("sebastienmot.com\n", encoding="utf-8")
+        (DIST / "CNAME").write_text(f"{custom_domain or 'sebastienmot.com'}\n", encoding="utf-8")
 
     verify_html_output(DIST)
     verify_links(DIST, base_path, posts)
