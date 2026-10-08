@@ -6,20 +6,18 @@
         <span class="src {{ post.source }}">{{ post.source_label }}</span>
         · <time datetime="{{ post.date_iso }}" itemprop="datePublished">{{ post.dateLabel }}</time>
       </p>
-      <h1 itemprop="headline">{{ post.title }}</h1>
+      <h1 itemprop="headline">{{ post.title|fr }}</h1>
     </header>
     {% if post.image %}
     <figure class="post-single-media">
       <img src="{{ href('/' ~ post.image) }}" alt="" loading="lazy" decoding="async" itemprop="image">
     </figure>
-    {% elif post.cover %}
-    <figure class="post-single-cover cover dark" aria-hidden="true">
-      <b>{{ post.cover.big }}</b><span>{{ post.cover.small }}</span>
-    </figure>
+    {% elif post.figure %}
+    <p class="post-single-figure"><b>{{ post.figure.big }}</b><span>{{ post.figure.small }}</span></p>
     {% endif %}
     <div class="post-single-body" itemprop="articleBody">
       {% for para in post.paragraphs %}
-      <p>{{ para }}</p>
+      <p>{{ para|fr }}</p>
       {% endfor %}
     </div>
     <footer class="post-single-foot">

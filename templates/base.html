@@ -38,22 +38,20 @@
 </header>
 {{ body|safe }}
 <footer class="site-footer">
-  <div class="footer-main">
-    <a class="brand" href="{{ home_href }}"><span>SÉBASTIEN MOT</span></a>
-    <p class="footer-meta">© {{ year }} Sébastien Mot · Dernière mise à jour {{ build_date_label }} · <a href="{{ href('/posts/') }}">Tous les posts</a></p>
-    {% if latest_posts %}
-    <p class="footer-latest">Récents :
-      {% for p in latest_posts %}
-      <a href="{{ href('/posts/' ~ p.slug ~ '/') }}">{{ p.title_short }}</a>{% if not loop.last %} · {% endif %}
-      {% endfor %}
-    </p>
-    {% endif %}
-  </div>
-  <div>
-    <a href="https://x.com/sebastienmot" rel="noreferrer">X ↗</a>
-    <a href="https://www.linkedin.com/in/sebastienmot/" rel="noreferrer">LinkedIn ↗</a>
-    <a href="https://sebastienmot.com">sebastienmot.com</a>
-    <a href="{{ home_href }}">Haut de page ↑</a>
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-id">
+        <a class="footer-brand" href="{{ home_href }}">SÉBASTIEN MOT</a>
+        <p class="footer-tagline">Entrepreneur libre. Je partage ce que j'apprends sur l'argent et les décisions.</p>
+      </div>
+      <nav class="footer-links" aria-label="Liens du pied de page">
+        <a href="{{ href('/posts/') }}">Posts</a>
+        <a href="https://x.com/sebastienmot" target="_blank" rel="noreferrer">X</a>
+        <a href="https://www.linkedin.com/in/sebastienmot/" target="_blank" rel="noreferrer">LinkedIn</a>
+        <a href="mailto:seb@sebastienmot.com">Contact</a>
+      </nav>
+    </div>
+    <p class="footer-legal">© {{ year }} Sébastien Mot<span class="sep" aria-hidden="true"> · </span><span class="footer-updated">Mis à jour le <time datetime="{{ build_date_iso }}">{{ build_date_label }}</time></span></p>
   </div>
 </footer>
 {% for block in body_scripts %}{{ block|safe }}{% endfor %}

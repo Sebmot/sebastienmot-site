@@ -1,49 +1,52 @@
 (() => {
-  const BASE = document.documentElement.dataset.basePath || "";
-  const bp = (path) => {
-    if (!path.startsWith("/")) path = "/" + path;
-    return `${BASE}${path}`;
-  };
-
-  const dataEl = document.getElementById("posts-data");
+  /* La liste complète est rendue côté serveur (fonctionne sans JS).
+     Avec JS : filtres X / LinkedIn et affichage 5 par 5, par filtre. */
+  const PAGE = 5;
+  document.documentElement.classList.add("js");
   const listEl = document.getElementById("posts-archive");
-  if (!dataEl || !listEl) return;
+  const btn = document.getElementById("btn-load");
+  if (!listEl) return;
 
-  const all = window.sortSitePosts(JSON.parse(dataEl.textContent).posts.slice());
+  const items = Array.from(listEl.children);
   let filter = "all";
-
-  const esc = (s) =>
-    s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" }[c]));
+  let pages = 1;
 
   function render() {
-    const items = all.filter((p) => filter === "all" || p.source === filter);
-    listEl.innerHTML = items
-      .map((p) => {
-        const pin = p.pinned ? ' · <span class="pin">Épinglé</span>' : "";
-        const title = p.text.split("\n")[0];
-        const body = p.text.split("\n").slice(1).join(" ").trim();
-        const excerpt = esc(body.replace(/\s+/g, " ").slice(0, 180) + (body.length > 180 ? "…" : ""));
-        return `<li><article>
-          <p class="meta-line"><span class="src ${p.source}">${p.source === "x" ? "X" : "LinkedIn"}</span> · <time datetime="${esc(p.date.slice(0, 10))}">${esc(p.dateLabel)}</time>${pin}</p>
-          <h2><a href="${bp(`/posts/${p.slug}/`)}">${esc(title)}</a></h2>
-          <p class="excerpt">${excerpt}</p>
-        </article></li>`;
-      })
-      .join("");
+    const matching = items.filter((li) => filter === "all" || li.dataset.source === filter);
+    const limit = pages * PAGE;
+    items.forEach((li) => {
+      li.hidden = true;
+    });
+    matching.slice(0, limit).forEach((li) => {
+      li.hidden = false;
+    });
+    const rest = matching.length - Math.min(limit, matching.length);
+    if (btn) {
+      btn.hidden = rest <= 0;
+      btn.setAttribute("aria-label", `Voir ${Math.min(PAGE, rest)} posts de plus`);
+    }
   }
 
   document.querySelectorAll("[data-c]").forEach((s) => {
     const f = s.dataset.c;
-    s.textContent = all.filter((p) => f === "all" || p.source === f).length;
+    s.textContent = items.filter((li) => f === "all" || li.dataset.source === f).length;
   });
 
   document.querySelectorAll(".filters button").forEach((b) => {
     b.onclick = () => {
       document.querySelectorAll(".filters button").forEach((x) => x.setAttribute("aria-pressed", x === b));
       filter = b.dataset.f;
+      pages = 1;
       render();
     };
   });
+
+  if (btn) {
+    btn.onclick = () => {
+      pages += 1;
+      render();
+    };
+  }
 
   render();
 })();

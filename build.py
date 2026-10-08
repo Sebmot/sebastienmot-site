@@ -53,6 +53,22 @@ def split_post(post: dict) -> tuple[str, str]:
     return title, body
 
 
+def fr_nbsp(text: str) -> str:
+    """Espace insécable avant : ; ? ! » et après « (typographie française)."""
+    if not text:
+        return text
+    text = re.sub(r"[ \u00a0]+([:;?!»])", "\u00a0\\1", str(text))
+    return re.sub(r"«[ \u00a0]+", "«\u00a0", text)
+
+
+def card_excerpt(body: str, limit: int = 260) -> str:
+    """Extrait pour cartes : lignes conservées, lignes vides et liens seuls retirés."""
+    lines = [ln.strip() for ln in body.split("\n")]
+    lines = [ln for ln in lines if ln and not re.fullmatch(r"https?://\S+", ln)]
+    text = "\n".join(lines)
+    return text if len(text) <= limit else text[:limit].rstrip() + "…"
+
+
 def assign_slugs(posts: list[dict]) -> list[dict]:
     seen: dict[str, int] = {}
     enriched = []
@@ -72,6 +88,12 @@ def assign_slugs(posts: list[dict]) -> list[dict]:
                 "source_label": SOURCE_LABEL[post["source"]],
                 "paragraphs": [p.strip() for p in body.split("\n\n") if p.strip()] if body else [],
                 "excerpt": re.sub(r"\s+", " ", body)[:180] + ("…" if len(body) > 180 else ""),
+                "card_excerpt": card_excerpt(body),
+                "figure": post.get("cover") if (
+                    not post.get("image")
+                    and post.get("cover")
+                    and re.search(r"\d", str(post["cover"].get("big", "")))
+                ) else None,
             }
         )
     return sort_posts(enriched)
@@ -223,6 +245,9 @@ def verify_html_output(dist: Path) -> None:
                 errors.append(f"{path.relative_to(dist)}: {marker}")
         if '<main id="main"' not in text:
             errors.append(f"{path.relative_to(dist)}: balise <main> absente")
+        if path.name == "index.html" and 'class="site-footer"' in text:
+            if 'class="footer-legal"' not in text or "Mis à jour le" not in text:
+                errors.append(f"{path.relative_to(dist)}: pied de page incomplet (date de mise à jour)")
     if errors:
         raise SystemExit("HTML échappé ou invalide dans dist/:\n  " + "\n  ".join(errors))
 
@@ -384,18 +409,14 @@ def main() -> None:
         autoescape=select_autoescape(["html", "xml"]),
     )
     env.globals["href"] = href
+    env.filters["fr"] = fr_nbsp
     env.globals["base_path"] = base_path
-
-    latest = [
-        {"slug": p["slug"], "title_short": (p["title"][:42] + "…") if len(p["title"]) > 45 else p["title"]}
-        for p in posts[:3]
-    ]
 
     common = {
         "site_url": SITE_URL,
         "year": year,
         "build_date_label": build_date_label,
-        "latest_posts": latest,
+        "build_date_iso": build_dt.astimezone().strftime("%Y-%m-%d"),
         "base_path": base_path,
         "href": href,
     }

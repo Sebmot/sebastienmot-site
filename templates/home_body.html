@@ -43,31 +43,29 @@
   </header>
   <div id="feat"></div>
   <div class="post-grid" id="post-grid"></div>
-  <div class="more-wrap" id="more-wrap"><button class="btn-load" id="btn-load" type="button"></button></div>
-  <noscript>
-    <p class="lead"><a href="{{ href('/posts/') }}">Voir tous les posts ({{ post_count }})</a></p>
-  </noscript>
+  <div class="more-wrap" id="more-wrap">
+    <button class="btn-load" id="btn-load" type="button" hidden>Voir plus</button>
+    <a class="more-all" href="{{ href('/posts/') }}">Tous les posts ({{ post_count }}) <span aria-hidden="true">→</span></a>
+  </div>
 </section>
 
 <section class="ideas" id="idees">
   <div class="ideas-head">
     <div><p class="kicker">Mes idées</p><h2 class="h2">2 convictions guident tout ce que je fais.</h2></div>
-    <p class="lead">Elles sont nées de 25 ans passés à écouter des dirigeants belges.</p>
+    <p class="lead">Elles viennent de 25 ans passés à écouter des dirigeants belges.</p>
   </div>
-  <div class="idea-grid">
-    <article class="idea">
-      <span class="num">01</span>
-      <h3>Quand tu vois ta réalité en entier, tout change.</h3>
-      <p>Les plus grandes erreurs ne viennent pas d'un manque d'intelligence.</p>
-      <q>Elles viennent d'une compréhension incomplète de sa propre réalité.</q>
-    </article>
-    <article class="idea">
-      <span class="num">02</span>
-      <h3>J'entreprends librement, et je partage ce que j'apprends sans filtre.</h3>
-      <p>Tu ne trouveras ici ni formation à vendre ni promesse de liberté financière.</p>
-      <q>Seulement des leviers concrets, qui comptent sur la durée.</q>
-    </article>
-  </div>
+  <ol class="idea-list">
+    <li class="idea">
+      <span class="num" aria-hidden="true">01</span>
+      <h3>Voir ta réalité en entier change tout.</h3>
+      <p>Les grosses erreurs viennent rarement d'un manque d'intelligence. Elles viennent d'une vision incomplète de ta propre situation. Le jour où tu la vois en entier, tu décides autrement.</p>
+    </li>
+    <li class="idea">
+      <span class="num" aria-hidden="true">02</span>
+      <h3>J'entreprends librement, et je partage sans filtre.</h3>
+      <p>Je n'ai aucune formation à te vendre et aucune liberté financière à te promettre. Je partage ce que j'apprends en entreprenant&nbsp;: des leviers concrets, qui tiennent dans la durée.</p>
+    </li>
+  </ol>
 </section>
 
 <section class="build" id="projets">
@@ -79,7 +77,7 @@
       <h3>NEZO.finance</h3>
       <p>Nezo t'aide à voir clair sur tes finances et sur ce que tu possèdes vraiment.</p>
       <span class="go">Découvrir Nezo ↗</span>
-      <p class="nezo-aside">Ni formation ni promesse de liberté financière : seulement des leviers concrets, qui comptent sur la durée.</p>
+      <p class="nezo-aside">Ton cash, ton patrimoine et tes échéances, pro comme privé, réunis dans une seule vue.</p>
     </a>
   </div>
 </section>
