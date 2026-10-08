@@ -21,6 +21,106 @@ ROOT = Path(__file__).parent
 DIST = ROOT / "dist"
 SITE_URL = os.environ.get("SITE_URL", "https://sebastienmot.com").rstrip("/")
 SOURCE_LABEL = {"x": "X", "linkedin": "LinkedIn"}
+OG_IMAGE = SITE_URL + "/assets/img/og.png"
+OG_IMAGE_SIZE = (1200, 630)
+OG_IMAGE_ALT = "Sébastien Mot, entrepreneur belge à Bruxelles : d'entrepreneur à entrepreneur."
+BRAND = "Sébastien Mot"
+HOME_TITLE = "Sébastien Mot — Entrepreneur belge, finances d'entrepreneur"
+HOME_DESCRIPTION = (
+    "Entrepreneur libre à Bruxelles, je partage avec les indépendants et dirigeants de PME "
+    "en Belgique 25 ans de terrain sur l'argent et les décisions."
+)
+POSTS_TITLE = "Posts : finances d'entrepreneur en Belgique — Sébastien Mot"
+POSTS_DESCRIPTION = (
+    "Tous les posts de Sébastien Mot, entrepreneur belge : trésorerie, fiscalité, patrimoine "
+    "et décisions pour indépendants et dirigeants de PME en Belgique."
+)
+TITLE_MAX = 60
+DESC_MAX = 155
+X_URL = "https://x.com/sebastienmot"
+LINKEDIN_URL = "https://www.linkedin.com/in/sebastienmot/"
+
+
+def clip(text: str, limit: int) -> str:
+    """Coupe proprement sur un mot, avec « … », sans dépasser limit caractères."""
+    text = re.sub(r"\s+", " ", text or "").strip()
+    if len(text) <= limit:
+        return text
+    cut = text[: limit - 1]
+    if " " in cut:
+        cut = cut[: cut.rfind(" ")]
+    return cut.rstrip(" ,;:.!?—-·") + "…"
+
+
+def strip_emoji(text: str) -> str:
+    return re.sub(r"[\U0001F000-\U0001FAFF\u2600-\u27BF\uFE0F]", "", text).strip()
+
+
+def image_size(path: Path) -> tuple[int, int] | None:
+    """Dimensions PNG / JPEG / WebP sans dépendance externe."""
+    try:
+        data = path.read_bytes()
+    except OSError:
+        return None
+    if data[:8] == b"\x89PNG\r\n\x1a\n":
+        return int.from_bytes(data[16:20], "big"), int.from_bytes(data[20:24], "big")
+    if data[:2] == b"\xff\xd8":
+        i = 2
+        while i < len(data) - 9:
+            if data[i] != 0xFF:
+                i += 1
+                continue
+            marker = data[i + 1]
+            seg = int.from_bytes(data[i + 2 : i + 4], "big")
+            if marker in (0xC0, 0xC1, 0xC2):
+                return int.from_bytes(data[i + 7 : i + 9], "big"), int.from_bytes(data[i + 5 : i + 7], "big")
+            i += 2 + seg
+        return None
+    if data[:4] == b"RIFF" and data[8:12] == b"WEBP":
+        if data[12:16] == b"VP8X":
+            return 1 + int.from_bytes(data[24:27], "little"), 1 + int.from_bytes(data[27:30], "little")
+        if data[12:16] == b"VP8 ":
+            return int.from_bytes(data[26:28], "little") & 0x3FFF, int.from_bytes(data[28:30], "little") & 0x3FFF
+    return None
+
+
+def post_page_title(title: str, taken: set[str], source_label: str) -> str:
+    base = strip_emoji(title)
+    for suffix in (f" — {BRAND}, entrepreneur belge", f" — {BRAND}"):
+        if len(base) + len(suffix) <= TITLE_MAX:
+            candidate = base + suffix
+            break
+    else:
+        suffix = f" — {BRAND}"
+        candidate = clip(base, TITLE_MAX - len(suffix)) + suffix
+    if candidate in taken:
+        suffix = f" ({source_label}) — {BRAND}"
+        candidate = clip(base, TITLE_MAX - len(suffix)) + suffix
+    taken.add(candidate)
+    return candidate
+
+
+STOP = set("""a au aux avec ce ces c cest dans de des du elle en et est il ils je j la le les leur l lui ma mais me mes moi mon ne nos notre nous on ou par pas pour qu que qui sa se ses si son sur ta te tes toi ton tu un une vos votre vous y d n s t m plus tout tous fait faire être etre avoir a ça ca comme quand bien très tres aussi encore même meme sans""".split())
+
+
+def keywords(text: str) -> set[str]:
+    norm = unicodedata.normalize("NFKD", text.lower())
+    norm = "".join(c for c in norm if not unicodedata.combining(c))
+    return {w for w in re.findall(r"[a-z0-9]{4,}", norm) if w not in STOP}
+
+
+def related_posts(post: dict, posts: list[dict], n: int = 3) -> list[dict]:
+    """Posts proches (mots communs), complétés par les plus récents."""
+    mine = keywords(post["text"])
+    scored = []
+    for other in posts:
+        if other["slug"] == post["slug"] or other["title"] == post["title"]:
+            continue
+        score = len(mine & keywords(other["text"]))
+        scored.append((score, other["date"], other))
+    scored.sort(key=lambda t: (t[0], t[1]), reverse=True)
+    return [o for _, _, o in scored[:n]]
+
 
 
 def normalize_base_path(raw: str | None) -> str:
@@ -289,21 +389,21 @@ def write_rss(path: Path, posts: list[dict], build_dt: datetime) -> None:
 
 
 def write_sitemap(path: Path, posts: list[dict]) -> None:
+    today = date.today().isoformat()
     urls = [
-        ("", "weekly", "1.0"),
-        ("/posts/", "weekly", "0.9"),
+        ("/", "weekly", "1.0", today),
+        ("/posts/", "weekly", "0.9", today),
     ]
     for p in posts:
-        urls.append((f"/posts/{p['slug']}/", "monthly", "0.8"))
+        urls.append((f"/posts/{p['slug']}/", "monthly", "0.8", p["date_iso"]))
     lines = [
         '<?xml version="1.0" encoding="UTF-8"?>',
         '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">',
     ]
-    today = date.today().isoformat()
-    for loc, freq, pri in urls:
+    for loc, freq, pri, lastmod in urls:
         lines.append("  <url>")
         lines.append(f"    <loc>{SITE_URL}{loc}</loc>")
-        lines.append(f"    <lastmod>{today}</lastmod>")
+        lines.append(f"    <lastmod>{lastmod}</lastmod>")
         lines.append(f"    <changefreq>{freq}</changefreq>")
         lines.append(f"    <priority>{pri}</priority>")
         lines.append("  </url>")
@@ -311,54 +411,117 @@ def write_sitemap(path: Path, posts: list[dict]) -> None:
     path.write_text("\n".join(lines) + "\n", encoding="utf-8")
 
 
+CONVICTIONS = (
+    {
+        "title": "Voir ta réalité en entier change tout.",
+        "text": "Les grosses erreurs viennent rarement d'un manque d'intelligence. Elles viennent "
+        "d'une vision incomplète de ta propre situation. Le jour où tu la vois en entier, tu décides autrement.",
+    },
+    {
+        "title": "J'entreprends librement, et je partage sans filtre.",
+        "text": "Je n'ai aucune formation à te vendre et aucune liberté financière à te promettre. "
+        "Je partage ce que j'apprends en entreprenant : des leviers concrets, qui tiennent dans la durée.",
+    },
+)
+
+ABOUT_FACTS = (
+    "Sébastien Mot est un entrepreneur libre belge, basé à Bruxelles.",
+    "Depuis 25 ans, il travaille en face des dirigeants : plus de 500 indépendants et dirigeants "
+    "de PME en Belgique, et 2 faillites évitées.",
+    "Il est le fondateur de NEZO.finance (https://nezo.finance), une application qui réunit le cash, "
+    "le patrimoine et les échéances d'un entrepreneur, pro comme privé, dans une seule vue.",
+    "Il écrit en français, sur X et LinkedIn, sur les finances d'entrepreneur : trésorerie, fiscalité belge, "
+    "décisions, patrimoine. Il ne vend ni formation ni promesse de liberté financière.",
+    "Les posts sur les Championnats du monde de Fortnite parlent de l'équipe esport fondée par Noa ; "
+    "ce n'est pas un projet de Sébastien Mot.",
+)
+
+
 def write_llms(path: Path, posts: list[dict], full: bool) -> None:
-    if full:
-        chunks = [
-            "# Sébastien Mot — contenu complet pour moteurs IA",
-            "",
-            f"Site : {SITE_URL}",
-            "Contact : seb@sebastienmot.com",
-            "",
-            "## Qui est Sébastien Mot",
-            "",
-            "Entrepreneur belge depuis plus de 25 ans, en contact direct avec dirigeants "
-            "et PME. Il partage sur l'argent, les décisions et l'entrepreneuriat, sans formation "
-            "à vendre ni promesse de liberté financière. Projet en cours : NEZO.finance.",
-            "",
-            "## Posts",
-            "",
-        ]
+    head = [
+        f"# {BRAND}",
+        "",
+        "> Entrepreneur libre à Bruxelles. D'entrepreneur à entrepreneur, pour les indépendants "
+        "et dirigeants de PME en Belgique.",
+        "",
+        "## Qui est Sébastien Mot",
+        "",
+        *[f"- {fact}" for fact in ABOUT_FACTS],
+        "",
+        "## Convictions",
+        "",
+    ]
+    for i, c in enumerate(CONVICTIONS, 1):
+        head.append(f"{i}. **{c['title']}** {c['text']}")
+    head += [
+        "",
+        "## Liens",
+        "",
+        f"- Accueil : {SITE_URL}/",
+        f"- Tous les posts : {SITE_URL}/posts/",
+        f"- Flux RSS : {SITE_URL}/feed.xml",
+        f"- X : {X_URL}",
+        f"- LinkedIn : {LINKEDIN_URL}",
+        "- Contact : seb@sebastienmot.com",
+        "",
+        "## Posts",
+        "",
+    ]
+    if not full:
         for p in posts:
-            chunks.append(f"### {p['title']}")
-            chunks.append(f"- URL : {SITE_URL}/posts/{p['slug']}/")
-            chunks.append(f"- Source : {p['source_label']} · {p['dateLabel']}")
-            chunks.append(f"- Original : {p['url']}")
-            chunks.append("")
-            chunks.append(p["text"])
-            chunks.append("")
-        path.write_text("\n".join(chunks), encoding="utf-8")
-    else:
-        lines = [
-            "# Sébastien Mot",
+            head.append(f"- [{strip_emoji(p['title'])}]({SITE_URL}/posts/{p['slug']}/) · {p['source_label']} · {p['date_iso']}")
+        head += ["", f"Texte intégral des posts : {SITE_URL}/llms-full.txt", ""]
+        path.write_text("\n".join(head), encoding="utf-8")
+        return
+    for p in posts:
+        head += [
+            f"### {strip_emoji(p['title'])}",
             "",
-            f"> {SITE_URL} — D'entrepreneur à entrepreneur.",
+            f"- URL : {SITE_URL}/posts/{p['slug']}/",
+            f"- Source : {p['source_label']} · {p['date_iso']} · {p['url']}",
             "",
-            "Sébastien Mot aide à comprendre l'argent pour mieux décider. 25 ans aux côtés "
-            "de dirigeants belges. Posts X et LinkedIn en français.",
+            p["text"],
             "",
-            "## Liens",
-            f"- Accueil : {SITE_URL}/",
-            f"- Tous les posts : {SITE_URL}/posts/",
-            f"- RSS : {SITE_URL}/feed.xml",
-            f"- Contact : seb@sebastienmot.com",
-            "",
-            "## Posts récents",
         ]
-        for p in posts[:8]:
-            lines.append(f"- [{p['title']}]({SITE_URL}/posts/{p['slug']}/)")
-        lines.append("")
-        lines.append(f"Liste complète : {SITE_URL}/llms-full.txt")
-        path.write_text("\n".join(lines) + "\n", encoding="utf-8")
+    path.write_text("\n".join(head), encoding="utf-8")
+
+
+ROBOTS_TXT = f"""# sebastienmot.com : tout le site est public, y compris pour les moteurs IA.
+User-agent: *
+Allow: /
+
+User-agent: Googlebot
+Allow: /
+
+User-agent: Bingbot
+Allow: /
+
+User-agent: GPTBot
+Allow: /
+
+User-agent: OAI-SearchBot
+Allow: /
+
+User-agent: ChatGPT-User
+Allow: /
+
+User-agent: ClaudeBot
+Allow: /
+
+User-agent: Claude-SearchBot
+Allow: /
+
+User-agent: PerplexityBot
+Allow: /
+
+User-agent: Google-Extended
+Allow: /
+
+User-agent: Applebot-Extended
+Allow: /
+
+Sitemap: {SITE_URL}/sitemap.xml
+"""
 
 
 def parse_args() -> argparse.Namespace:
@@ -395,6 +558,11 @@ def main() -> None:
 
     raw = json.loads((ROOT / "posts.json").read_text(encoding="utf-8"))
     posts = assign_slugs(raw["posts"])
+    for p in posts:
+        if p.get("image"):
+            size = image_size(ROOT / p["image"].lstrip("/"))
+            if size:
+                p["image_width"], p["image_height"] = size
 
     if DIST.exists():
         shutil.rmtree(DIST)
@@ -448,6 +616,10 @@ def main() -> None:
                     "featured",
                     "text",
                     "cover",
+                    "image_width",
+                    "image_height",
+                    "highlights",
+                    "question",
                     "slug",
                 )
                 if k in p
@@ -457,37 +629,67 @@ def main() -> None:
     }
     posts_json = json.dumps(posts_payload, ensure_ascii=False).replace("</", "<\\/")
 
+    person_id = SITE_URL + "/#person"
     person_ld = {
         "@context": "https://schema.org",
         "@type": "Person",
-        "name": "Sébastien Mot",
-        "url": SITE_URL,
+        "@id": person_id,
+        "name": BRAND,
+        "url": SITE_URL + "/",
+        "image": SITE_URL + "/img/seb.png",
         "email": "mailto:seb@sebastienmot.com",
-        "sameAs": [
-            "https://x.com/sebastienmot",
-            "https://www.linkedin.com/in/sebastienmot/",
-        ],
         "jobTitle": "Entrepreneur",
-        "description": "Comprendre l'argent, c'est mieux décider. D'entrepreneur à entrepreneur.",
+        "description": "Entrepreneur libre belge, basé à Bruxelles. 25 ans en face des indépendants "
+        "et dirigeants de PME en Belgique.",
+        "address": {"@type": "PostalAddress", "addressLocality": "Bruxelles", "addressCountry": "BE"},
+        "nationality": {"@type": "Country", "name": "Belgique"},
+        "knowsLanguage": "fr-BE",
+        "knowsAbout": [
+            "finances d'entreprise",
+            "trésorerie",
+            "indépendants",
+            "PME belges",
+            "gestion de patrimoine d'entrepreneur",
+            "fiscalité belge",
+            "entrepreneuriat",
+        ],
+        "sameAs": [X_URL, LINKEDIN_URL],
+        "worksFor": {
+            "@type": "Organization",
+            "name": "NEZO.finance",
+            "url": "https://nezo.finance",
+            "founder": {"@id": person_id},
+            "areaServed": {"@type": "Country", "name": "Belgique"},
+        },
     }
     website_ld = {
         "@context": "https://schema.org",
         "@type": "WebSite",
-        "name": "Sébastien Mot",
-        "url": SITE_URL,
+        "@id": SITE_URL + "/#website",
+        "name": BRAND,
+        "url": SITE_URL + "/",
         "inLanguage": "fr-BE",
-        "publisher": {"@type": "Person", "name": "Sébastien Mot"},
+        "publisher": {"@id": person_id},
+        "about": {"@id": person_id},
+    }
+    author_ref = {"@type": "Person", "@id": person_id, "name": BRAND, "url": SITE_URL + "/"}
+    og_default = {
+        "og_image": OG_IMAGE,
+        "og_image_width": OG_IMAGE_SIZE[0],
+        "og_image_height": OG_IMAGE_SIZE[1],
+        "og_image_alt": OG_IMAGE_ALT,
     }
 
     home_html = render_page(
         env,
         "home_body.html",
         post_count=len(posts),
-        page_title="Sébastien Mot — D'entrepreneur à entrepreneur",
-        meta_description="Comprendre l'argent, c'est mieux décider. D'entrepreneur à entrepreneur.",
+        convictions=CONVICTIONS,
+        page_title=HOME_TITLE,
+        meta_description=HOME_DESCRIPTION,
         canonical=SITE_URL + "/",
         og_type="website",
-        og_image=SITE_URL + "/img/seb.webp",
+        **og_default,
         head_extra=[
             json_ld_script(person_ld),
             json_ld_script(website_ld),
@@ -506,11 +708,11 @@ def main() -> None:
         env,
         "posts_index.html",
         posts=posts,
-        page_title="Tous les posts — Sébastien Mot",
-        meta_description="Tous les posts X et LinkedIn de Sébastien Mot, classés par date.",
+        page_title=POSTS_TITLE,
+        meta_description=POSTS_DESCRIPTION,
         canonical=SITE_URL + "/posts/",
         og_type="website",
-        og_image=None,
+        **og_default,
         head_extra=[json_ld_script(website_ld)],
         body_scripts=[
             f'<script id="posts-data" type="application/json">{posts_json}</script>',
@@ -524,38 +726,64 @@ def main() -> None:
     posts_dir.mkdir()
     (posts_dir / "index.html").write_text(posts_index_html, encoding="utf-8")
 
+    taken_titles: set[str] = {HOME_TITLE, POSTS_TITLE}
     for p in posts:
+        url = f"{SITE_URL}/posts/{p['slug']}/"
         schema_type = "SocialMediaPosting" if p["source"] == "x" else "BlogPosting"
+        body_lines = [
+            re.sub(r"^[•\-–→➡️\s]+", "", ln).strip() for ln in p["card_excerpt"].split("\n") if ln.strip()
+        ]
+        body_lines = [ln for ln in body_lines if ln]
+        joined = " ".join(ln if re.search(r"[.?!:;…,»]$", ln) or i == len(body_lines) - 1 else ln + ","
+                          for i, ln in enumerate(body_lines))
+        desc = clip(joined if body_lines else p["title"], DESC_MAX)
+        if p.get("image"):
+            img_url = SITE_URL + "/" + p["image"].lstrip("/")
+            og = {
+                "og_image": img_url,
+                "og_image_width": p.get("image_width"),
+                "og_image_height": p.get("image_height"),
+                "og_image_alt": strip_emoji(p["title"]),
+            }
+        else:
+            img_url = OG_IMAGE
+            og = og_default
         post_ld = {
             "@context": "https://schema.org",
             "@type": schema_type,
-            "headline": p["title"],
+            "headline": clip(strip_emoji(p["title"]), 110),
             "datePublished": p["date_iso"],
-            "author": {"@type": "Person", "name": "Sébastien Mot", "url": SITE_URL},
-            "mainEntityOfPage": f"{SITE_URL}/posts/{p['slug']}/",
-            "url": f"{SITE_URL}/posts/{p['slug']}/",
+            "dateModified": p["date_iso"],
+            "author": author_ref,
+            "publisher": author_ref,
+            "mainEntityOfPage": url,
+            "url": url,
+            "image": img_url,
             "inLanguage": "fr-BE",
             "isBasedOn": p["url"],
+            "description": desc,
         }
-        if p.get("image"):
-            post_ld["image"] = SITE_URL + "/" + p["image"].lstrip("/")
-        desc = p["body"][:300] if p["body"] else p["title"]
-        post_ld["description"] = desc
-
-        og_img = None
-        if p.get("image"):
-            og_img = SITE_URL + "/" + p["image"].lstrip("/")
+        breadcrumb_ld = {
+            "@context": "https://schema.org",
+            "@type": "BreadcrumbList",
+            "itemListElement": [
+                {"@type": "ListItem", "position": 1, "name": "Accueil", "item": SITE_URL + "/"},
+                {"@type": "ListItem", "position": 2, "name": "Posts", "item": SITE_URL + "/posts/"},
+                {"@type": "ListItem", "position": 3, "name": clip(strip_emoji(p["title"]), 80), "item": url},
+            ],
+        }
 
         html = render_page(
             env,
             "post.html",
             post=p,
-            page_title=f"{p['title']} — Sébastien Mot",
-            meta_description=desc[:160],
-            canonical=f"{SITE_URL}/posts/{p['slug']}/",
+            related=related_posts(p, posts),
+            page_title=post_page_title(p["title"], taken_titles, p["source_label"]),
+            meta_description=desc,
+            canonical=url,
             og_type="article",
-            og_image=og_img,
-            head_extra=[json_ld_script(post_ld), json_ld_script(person_ld)],
+            **og,
+            head_extra=[json_ld_script(post_ld), json_ld_script(breadcrumb_ld)],
             body_scripts=[],
             **common,
             **nav_inner,
@@ -564,10 +792,26 @@ def main() -> None:
         out.mkdir(parents=True, exist_ok=True)
         (out / "index.html").write_text(html, encoding="utf-8")
 
-    (DIST / "robots.txt").write_text(
-        f"User-agent: *\nAllow: /\nSitemap: {SITE_URL}/sitemap.xml\n",
-        encoding="utf-8",
+    not_found_html = render_page(
+        env,
+        "404.html",
+        recent=posts[:3],
+        page_title=f"Page introuvable — {BRAND}",
+        meta_description="Cette page n'existe pas ou a été déplacée. Retrouve les posts de Sébastien Mot, entrepreneur belge.",
+        canonical=None,
+        og_type="website",
+        noindex=True,
+        **og_default,
+        head_extra=[],
+        body_scripts=[],
+        **common,
+        **nav_inner,
     )
+    (DIST / "404.html").write_text(not_found_html, encoding="utf-8")
+    for icon in ("favicon.ico", "apple-touch-icon.png"):
+        shutil.copy(ROOT / "assets" / "img" / icon, DIST / icon)
+
+    (DIST / "robots.txt").write_text(ROBOTS_TXT, encoding="utf-8")
     write_sitemap(DIST / "sitemap.xml", posts)
     write_rss(DIST / "feed.xml", posts, build_dt)
     write_llms(DIST / "llms.txt", posts, full=False)

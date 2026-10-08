@@ -1,6 +1,7 @@
 <main id="main">
 <section class="hero" id="top"><div class="hero-sticky">
   <div class="hero-copy">
+    <p class="kicker hero-kicker">Entrepreneur belge · Bruxelles</p>
     <h1><span class="headline-line"><span>Comprendre l'argent,</span></span>
         <span class="headline-line"><span>c'est mieux décider.</span></span></h1>
     <p class="hero-summary">Et chaque bonne décision te rapproche un peu plus de ta liberté.</p>
@@ -18,8 +19,8 @@
 
 <section class="profile-stats" id="profile-stats"><div class="profile-stats-panel">
   <header class="profile-stats-heading">
-    <h2>25 ans en face des dirigeants, jamais derrière un écran.</h2>
-    <p>Tout ce que je partage ici vient de ces années sur le terrain, aux côtés d'entrepreneurs comme toi.</p>
+    <h2>25 ans en face des dirigeants belges, jamais derrière un écran.</h2>
+    <p>Tout ce que je partage ici vient de ces années sur le terrain, aux côtés d'indépendants et de dirigeants de PME en Belgique.</p>
   </header>
   <dl class="profile-stat-grid">
     <div class="profile-stat"><dd>25 ans</dd><dt>en face des dirigeants belges</dt></div>
@@ -33,7 +34,7 @@
     <div>
       <p class="kicker">Posts</p>
       <h2 class="h2">Tout ce que j'écris, réuni au même endroit.</h2>
-      <p class="lead">Mes posts X et LinkedIn se lisent ici en entier, sans filtre et sans algorithme.</p>
+      <p class="lead">Mes posts X et LinkedIn sur les finances d'entrepreneur se lisent ici en entier, sans filtre et sans algorithme.</p>
     </div>
     <div class="filters" role="group" aria-label="Filtrer les posts">
       <button data-f="all" aria-pressed="true" type="button">Tous <span class="n" data-c="all"></span></button>
@@ -55,16 +56,13 @@
     <p class="lead">Elles viennent de 25 ans passés à écouter des dirigeants belges.</p>
   </div>
   <ol class="idea-list">
+    {% for c in convictions %}
     <li class="idea">
-      <span class="num" aria-hidden="true">01</span>
-      <h3>Voir ta réalité en entier change tout.</h3>
-      <p>Les grosses erreurs viennent rarement d'un manque d'intelligence. Elles viennent d'une vision incomplète de ta propre situation. Le jour où tu la vois en entier, tu décides autrement.</p>
+      <span class="num" aria-hidden="true">{{ "%02d"|format(loop.index) }}</span>
+      <h3>{{ c.title }}</h3>
+      <p>{{ c.text|fr }}</p>
     </li>
-    <li class="idea">
-      <span class="num" aria-hidden="true">02</span>
-      <h3>J'entreprends librement, et je partage sans filtre.</h3>
-      <p>Je n'ai aucune formation à te vendre et aucune liberté financière à te promettre. Je partage ce que j'apprends en entreprenant&nbsp;: des leviers concrets, qui tiennent dans la durée.</p>
-    </li>
+    {% endfor %}
   </ol>
 </section>
 

@@ -10,7 +10,7 @@
     </header>
     {% if post.image %}
     <figure class="post-single-media">
-      <img src="{{ href('/' ~ post.image) }}" alt="" loading="lazy" decoding="async" itemprop="image">
+      <img src="{{ href('/' ~ post.image) }}" alt="{{ post.title }}"{% if post.image_width %} width="{{ post.image_width }}" height="{{ post.image_height }}"{% endif %} loading="eager" decoding="async" itemprop="image">
     </figure>
     {% elif post.figure %}
     <p class="post-single-figure"><b>{{ post.figure.big }}</b><span>{{ post.figure.small }}</span></p>
@@ -25,4 +25,14 @@
       <a class="text-link" href="{{ href('/posts/') }}">Tous les posts</a>
     </footer>
   </article>
+  {% if related %}
+  <aside class="related" aria-labelledby="related-title">
+    <h2 id="related-title" class="related-title">À lire aussi</h2>
+    <ul class="related-list">
+      {% for r in related %}
+      <li><a href="{{ href('/posts/' ~ r.slug ~ '/') }}"><span class="related-meta">{{ r.source_label }} · {{ r.dateLabel }}</span><span class="related-name">{{ r.title|fr }}</span></a></li>
+      {% endfor %}
+    </ul>
+  </aside>
+  {% endif %}
 </main>

@@ -49,4 +49,7 @@ def normalize_post_entry(entry: dict) -> dict:
         "featured": bool(entry.get("featured", False)),
         "text": entry["text"].strip(),
         "cover": entry.get("cover"),
+        # Facultatifs, utilisés par le panneau « À la une » :
+        **({"highlights": list(entry["highlights"])} if entry.get("highlights") else {}),
+        **({"question": entry["question"].strip()} if entry.get("question") else {}),
     }

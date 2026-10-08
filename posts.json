@@ -1,5 +1,5 @@
 {
-  "_comment": "Ajouter un post : copier un objet de 'posts' et remplir source (x|linkedin), date (AAAA-MM-JJ, tri), dateLabel (affiché), url, image (chemin dans img/ ou null), cover (null ou {big, small} : visuel typographique si pas d'image), pinned, featured (un seul post vedette), text (texte complet, \\n = retour à la ligne, 1re ligne = titre). Puis : python3 build.py",
+  "_comment": "Ajouter un post : copier un objet de 'posts' et remplir source (x|linkedin), date (AAAA-MM-JJ, tri), dateLabel (affiché), url, image (chemin dans img/ ou null), cover (null ou {big, small} : chiffre clé si pas d'image), pinned, featured (un seul post vedette ; facultatif pour lui : highlights [liste de puces] et question, affichés dans le panneau À la une, sinon aucune puce), text (texte complet, \\n = retour à la ligne, 1re ligne = titre). Puis : python3 build.py",
   "posts": [
     {
       "source": "x",
@@ -38,6 +38,12 @@
       "pinned": false,
       "text": "Carburant à 121 € le plein : la clause que beaucoup d'entrepreneurs oublient dans leurs devis.\n\nOn parlait de tout et de rien quand quelqu'un nous a montré la photo de son plein de sans-plomb : 121 €.\nIl payait à peine plus de 100 € l'année précédente.\n\nTrès vite, chacun a commencé à comparer ses chiffres.\nJusqu'à ce qu'on me demande : « Et toi, tu ferais quoi dans ce cas ? »\n\nJe lui ai posé une seule question : « Quand as-tu signé tes devis ? »\n« Au printemps. »\n\nEt là, il a compris le problème.\n\nSon client continuait à payer le prix prévu au printemps, tandis que lui subissait depuis plusieurs mois la hausse de ses coûts.\n\nLa différence ? Elle ne figurait nulle part dans ses factures.\nElle disparaissait directement dans sa marge.\n\nC'est précisément pour cela qu'il peut être intéressant, selon l'activité et le contrat, de prévoir une clause d'indexation liée au carburant.\n\nLe principe est simple : si le prix de référence du carburant évolue, une partie du prix peut évoluer avec lui, à la hausse comme à la baisse, selon les modalités prévues au contrat.\n\nExemple :\n➡️ Devis établi avec un carburant à 1,70 €/L\n➡️ Quelques mois plus tard : 1,90 €/L\n➡️ Sans mécanisme d'indexation : la hausse est pour toi.\n➡️ Avec une clause correctement prévue : elle peut être répercutée selon la formule convenue.\n\nCe n'est pas une question de faire payer davantage ton client.\nC'est une question de ne pas découvrir six mois plus tard que tu as travaillé avec une marge que tu n'avais jamais prévue de sacrifier.\n\nEt toi, quand tes coûts augmentent après la signature d'un devis : tu les répercutes, ou tu les absorbes ?",
       "featured": true,
+      "highlights": [
+        "Devis établi avec un carburant à 1,70 €/L",
+        "Quelques mois plus tard : 1,90 €/L",
+        "Sans mécanisme d'indexation : la hausse est pour toi."
+      ],
+      "question": "Et toi : tu les répercutes, ou tu les absorbes ?",
       "cover": {
         "big": "121 €",
         "small": "le plein de sans-plomb"

@@ -3651,3 +3651,11 @@ body.calendly-loading-open {
  .footer-legal{margin-top:28px}
 }
 .feat-side q{quotes:"«\00a0" "\00a0»"}
+.feat.no-side{grid-template-columns:1fr}
+/* Convictions centrées (mobile et desktop) */
+.idea{justify-items:center;text-align:center}
+.idea h3{margin-left:auto;margin-right:auto}
+.idea p{max-width:40ch;margin-left:auto;margin-right:auto}
+@media(max-width:600px){.idea p{max-width:34ch}}
+.hero-kicker{margin:0 0 18px}
+@media(max-width:600px){.hero-kicker{margin-bottom:14px}}

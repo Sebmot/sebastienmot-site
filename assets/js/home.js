@@ -59,19 +59,24 @@ function renderFeat() {
   const p = all.find((x) => x.featured);
   if (!p || (filter !== "all" && filter !== p.source)) return;
   const [t, b] = split(p);
-  box.innerHTML = `<article class="feat"><div class="feat-body">
+  /* Panneau latéral piloté par posts.json : cover, highlights[] et question facultatifs. */
+  const hl = Array.isArray(p.highlights) ? p.highlights.filter(Boolean) : [];
+  const side =
+    (p.cover ? `<div><div class="big">${esc(p.cover.big)}</div><div class="cap">${esc(p.cover.small || "")}</div></div>` : "") +
+    (hl.length ? `<ul>${hl.map((h) => `<li>${esc(h)}</li>`).join("")}</ul>` : "") +
+    (p.question ? `<q>${esc(p.question)}</q>` : "");
+  box.innerHTML = `<article class="feat${side ? "" : " no-side"}"><div class="feat-body">
    <div class="badge">${ICON[p.source]}<span>À la une</span><span class="d">${NAME[p.source]} · ${esc(p.dateLabel)}</span></div>
    <h3><a href="${postHref(p)}">${esc(t)}</a></h3><p class="txt">${esc(excerpt(b))}</p>
    <div class="actions"><a class="btn-more" href="${postHref(p)}">Lire la suite <span aria-hidden="true">→</span></a><a class="src-link" href="${p.url}" target="_blank" rel="noreferrer">Voir sur ${NAME[p.source]} ↗</a></div></div>
-   <div class="feat-side"><div><div class="big">${esc(p.cover.big)}</div><div class="cap">${esc(p.cover.small)}</div></div>
-   <ul><li>Devis établi avec un carburant à 1,70 €/L</li><li>Quelques mois plus tard&nbsp;: 1,90 €/L</li><li>Sans mécanisme d'indexation&nbsp;: la hausse est pour toi.</li></ul>
-   <q>Et toi&nbsp;: tu les répercutes, ou tu les absorbes&nbsp;?</q></div></article>`;
+   ${side ? `<div class="feat-side">${side}</div>` : ""}</article>`;
 }
 
-function mediaHtml(p) {
+function mediaHtml(p, title) {
   if (!p.image) return "";
   const imgPath = bp(p.image.startsWith("/") ? p.image : `/${p.image}`);
-  return `<figure class="media"><img src="${imgPath}" alt="" loading="lazy" decoding="async"></figure>`;
+  const size = p.image_width ? ` width="${p.image_width}" height="${p.image_height}"` : "";
+  return `<figure class="media"><img src="${imgPath}" alt="${esc(title)}"${size} loading="lazy" decoding="async"></figure>`;
 }
 
 function card(p, i) {
@@ -85,7 +90,7 @@ function card(p, i) {
     ? `<p class="figure"><b>${esc(p.cover.big)}</b><span>${esc(p.cover.small)}</span></p>`
     : "";
   el.innerHTML =
-    mediaHtml(p) +
+    mediaHtml(p, t) +
     `<div class="post-body"><div class="meta">${ICON[p.source]}<span>${NAME[p.source]} · ${esc(p.dateLabel)}</span>${p.pinned ? '<span class="pin">Épinglé</span>' : ""}</div>
     ${fig}<h3><a href="${href}">${esc(t)}</a></h3>${ex ? `<p class="txt">${esc(ex)}</p>` : ""}
     <div class="actions"><a class="btn-more" href="${href}">Lire la suite <span aria-hidden="true">→</span></a><a class="src-link" href="${p.url}" target="_blank" rel="noreferrer">Voir sur ${NAME[p.source]} ↗</a></div></div>`;
