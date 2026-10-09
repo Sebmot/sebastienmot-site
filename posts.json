@@ -3,6 +3,48 @@
   "posts": [
     {
       "source": "x",
+      "date": "2026-10-08T12:15",
+      "dateLabel": "8 oct. 2026",
+      "url": "https://x.com/sebastienmot/status/2108139087282528345",
+      "image": "img/ticket-perdu.jpg",
+      "pinned": false,
+      "text": "Un ticket perdu, ce n'est pas de l'administratif. C'est de l'argent.\n3 000 € de dépenses sans justificatif, c'est jusqu'à 750 € d'impôt en plus.\nPour des dépenses bien réelles.",
+      "featured": false,
+      "cover": {
+        "big": "750 €",
+        "small": "d'impôt en plus pour des tickets perdus"
+      }
+    },
+    {
+      "source": "x",
+      "date": "2026-10-08T08:32",
+      "dateLabel": "8 oct. 2026",
+      "url": "https://x.com/sebastienmot/status/2108083035354673646",
+      "image": null,
+      "pinned": false,
+      "text": "Deux clients, 25 % du chiffre d'affaires : dans une PME, ça ne s'appelle pas une réussite, ça s'appelle une dépendance. Le réflexe : dès qu'un client dépasse 20 % de ton chiffre, calcule combien de mois tu tiens s'il part demain. Ce chiffre-là, on ne le regarde jamais avant qu'il soit trop tard.",
+      "featured": false,
+      "cover": {
+        "big": "20 %",
+        "small": "au-delà, un client devient une dépendance"
+      }
+    },
+    {
+      "source": "x",
+      "date": "2026-10-08T08:00",
+      "dateLabel": "8 oct. 2026",
+      "url": "https://x.com/sebastienmot/status/2108074920651690320",
+      "image": null,
+      "pinned": false,
+      "text": "Une facture de 5 000 € qui arrive avec 60 jours de retard, ce n'est pas juste un problème administratif.\n\nC'est 5 000 € que tu ne peux pas utiliser pendant 60 jours.\n\nEt pourtant, beaucoup d'entrepreneurs regardent leur chiffre d'affaires avant de regarder leur délai d'encaissement.\n\nLe CA fait vivre ton ego.\n\nLa trésorerie fait vivre ton entreprise.",
+      "featured": false,
+      "cover": {
+        "big": "60 jours",
+        "small": "sans tes 5 000 €"
+      }
+    },
+    {
+      "source": "x",
       "date": "2026-10-07T20:52",
       "dateLabel": "7 oct. 2026",
       "url": "https://x.com/sebastienmot/status/2107906959416459425",
