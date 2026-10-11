@@ -3,6 +3,16 @@
   "posts": [
     {
       "source": "x",
+      "date": "2026-10-10T09:30",
+      "dateLabel": "10 oct. 2026",
+      "url": "https://x.com/sebastienmot/status/2108822339043615216",
+      "image": null,
+      "pinned": false,
+      "featured": false,
+      "text": "50 000 € sur ton compte ne veulent pas dire 50 000 € disponibles.\n\nTVA.\nCotisations.\nImpôts.\nSalaires.\nFournisseurs.\n\nLe solde bancaire est un chiffre.\n\nLa trésorerie disponible est une décision."
+    },
+    {
+      "source": "x",
       "date": "2026-10-09T11:49",
       "dateLabel": "9 oct. 2026",
       "url": "https://x.com/sebastienmot/status/2108494986497171939",
