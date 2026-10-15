@@ -158,6 +158,7 @@ def fr_nbsp(text: str) -> str:
     if not text:
         return text
     text = re.sub(r"[ \u00a0]+([:;?!»])", "\u00a0\\1", str(text))
+    text = re.sub(r"(\d) ([€%])", "\\1\u00a0\\2", text)
     return re.sub(r"«[ \u00a0]+", "«\u00a0", text)
 
 
@@ -558,6 +559,12 @@ def main() -> None:
 
     raw = json.loads((ROOT / "posts.json").read_text(encoding="utf-8"))
     posts = assign_slugs(raw["posts"])
+    for post in posts:
+        for key in ("text", "title", "body", "excerpt"):
+            if isinstance(post.get(key), str):
+                post[key] = fr_nbsp(post[key])
+        if isinstance(post.get("cover"), dict):
+            post["cover"].update({k: fr_nbsp(v) for k, v in post["cover"].items() if isinstance(v, str)})
     for p in posts:
         if p.get("image"):
             size = image_size(ROOT / p["image"].lstrip("/"))
