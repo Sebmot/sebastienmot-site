@@ -3770,4 +3770,21 @@ body.calendly-loading-open {
 .proj.nezo .nezo-aside{align-self:flex-start!important;opacity:1!important;letter-spacing:-.015em}
 .profile-stat{flex-direction:column!important}
 .post-grid{align-items:start}
-@media(max-width:1180px) and (min-width:901px){.profile-stats-panel{grid-template-columns:1fr!important;gap:32px!important}.profile-stats-heading h2{max-width:none!important}}
+@media(max-width:1360px) and (min-width:901px){.profile-stats-panel{grid-template-columns:1fr!important;gap:32px!important}.profile-stats-heading h2{max-width:none!important}}
+
+/* === Mobile v2 : cibles tactiles, méta lisibles, stats === */
+.profile-stat-grid{align-items:start!important}
+.profile-stat dd{display:flex;align-items:flex-end;min-height:1em}
+@media(max-width:900px){
+ .btn-more,.src-link,.more-all,.footer-links a,.footer-brand,.site-header .brand,a.brand,.post-single-foot a,.crumbs a,nav[aria-label] a,a[href$="/"].back,.posts-index a.back{display:inline-flex!important;align-items:center;min-height:44px}
+ .post .actions{padding-top:6px!important}
+ .footer-links{gap:0 24px!important}
+ .post .meta span,.feat .badge span,.related-meta,.meta-line,.meta-line time,.src{font-size:12.5px!important}
+ .kicker{font-size:12.5px!important}
+ .related-title{font-size:13px!important}
+}
+@media(max-width:520px){.profile-stat dd{font-size:1.65rem!important}.profile-stat:nth-child(1) dd{letter-spacing:-.05em}}
+@media(max-width:900px){.back-home a,.nf-actions a,.post-single-foot a{display:inline-flex!important;align-items:center;min-height:44px}}
+@media(max-width:900px){.kicker>a{display:inline-flex;align-items:center;min-height:44px;padding:0 4px}}
+.profile-stat{justify-content:flex-start!important;align-items:inherit}.profile-stat dd{line-height:1!important;min-height:0}@media(max-width:520px){.profile-stat{align-items:center;text-align:center}.profile-stat dd{font-size:1.75rem!important;letter-spacing:-.04em!important}}
+@media(max-width:520px){.profile-stat-grid .profile-stat:first-child{padding-top:4px!important;padding-left:6px!important}}
