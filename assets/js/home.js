@@ -76,7 +76,7 @@ function mediaHtml(p, title) {
   if (!p.image) return "";
   const imgPath = bp(p.image.startsWith("/") ? p.image : `/${p.image}`);
   const size = p.image_width ? ` width="${p.image_width}" height="${p.image_height}"` : "";
-  return `<figure class="media"><img src="${imgPath}" alt="${esc(title)}"${size} loading="lazy" decoding="async"></figure>`;
+  return `<figure class="media"><img src="${imgPath}" alt="${esc(title)}"${size}${p.image_position ? ` style="object-position:${esc(p.image_position)}"` : ""} loading="lazy" decoding="async"></figure>`;
 }
 
 function card(p, i) {

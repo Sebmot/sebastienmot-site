@@ -625,6 +625,7 @@ def main() -> None:
                     "cover",
                     "image_width",
                     "image_height",
+                    "image_position",
                     "highlights",
                     "question",
                     "slug",

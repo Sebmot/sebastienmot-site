@@ -10,7 +10,7 @@
     </header>
     {% if post.image %}
     <figure class="post-single-media">
-      <img src="{{ href('/' ~ post.image) }}" alt="{{ post.title }}"{% if post.image_width %} width="{{ post.image_width }}" height="{{ post.image_height }}"{% endif %} loading="eager" decoding="async" itemprop="image">
+      <img src="{{ href('/' ~ post.image) }}" alt="{{ post.title }}"{% if post.image_width %} width="{{ post.image_width }}" height="{{ post.image_height }}"{% endif %}{% if post.image_position %} style="object-position:{{ post.image_position }}"{% endif %} loading="eager" decoding="async" itemprop="image">
     </figure>
     {% elif post.figure %}
     <p class="post-single-figure"><b>{{ post.figure.big }}</b><span>{{ post.figure.small }}</span></p>
