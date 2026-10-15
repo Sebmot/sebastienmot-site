@@ -430,7 +430,7 @@ ABOUT_FACTS = (
     "de PME en Belgique. Entrepreneur depuis ses 19 ans, il a lui-même évité 2 faillites à sa société.",
     "Il est le fondateur de NEZO.finance (https://nezo.finance), une application qui réunit le cash, "
     "le patrimoine et les échéances d'un entrepreneur, pro comme privé, dans une seule vue.",
-    "Il écrit en français, sur X et LinkedIn, sur les finances d'entrepreneur : trésorerie, fiscalité belge, "
+    "Il écrit en français, sur LinkedIn, sur les finances d'entrepreneur : trésorerie, fiscalité belge, "
     "décisions, patrimoine. Il ne vend ni formation ni promesse de liberté financière.",
     "Les posts sur les Championnats du monde de Fortnite parlent de l'équipe esport fondée par Noa ; "
     "ce n'est pas un projet de Sébastien Mot.",

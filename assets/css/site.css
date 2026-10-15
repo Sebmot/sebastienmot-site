@@ -3716,3 +3716,58 @@ body.calendly-loading-open {
 .proj>p:not(.nezo-aside){font-size:16.5px!important;line-height:1.6!important}
 .proj .tag{font-size:12px!important}
 .proj a,.proj .text-link{font-size:15px!important}
+
+/* === Hero v2 === */
+.hero-sticky{grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr)!important;align-items:center!important;gap:clamp(40px,5vw,80px)!important;padding:clamp(48px,5.5vw,80px) var(--gutter) clamp(48px,5vw,72px)!important;overflow:visible!important}
+.hero-copy{padding-bottom:0!important;max-width:620px!important}
+.hero-name,.orbit-depth,.orbit-lines{display:none!important}
+.hero-summary{font-size:clamp(18px,1.45vw,20px)!important;max-width:34ch!important;color:#3b4656!important}
+.hero-actions{gap:12px!important}
+.hero-actions .button-primary,.hero-actions .text-link{min-height:48px!important;padding:0 24px!important;border-radius:999px!important;font-size:15.5px!important;font-weight:600;display:inline-flex!important;align-items:center;gap:8px;text-decoration:none}
+.hero-actions .text-link{border:1px solid var(--line-strong,rgba(3,13,27,.18))!important;background:#fff;color:var(--ink)!important}
+.hero-actions .text-link::after{display:none!important}
+.hero-actions .text-link:hover{border-color:var(--ink)!important}
+.portrait-stage{height:auto!important;align-self:center!important;justify-self:end;width:100%;max-width:460px;margin:0!important}
+.arch{position:relative!important;left:auto!important;bottom:auto!important;transform:none!important;width:100%!important;height:auto!important;aspect-ratio:900/925;border-radius:28px!important;overflow:hidden;background:linear-gradient(160deg,#eef2f7,#d9e1eb)!important;border:1px solid rgba(3,13,27,.06);box-shadow:0 30px 60px -30px rgba(3,13,27,.35)}
+.arch img.seb{position:static!important;transform:none!important;width:100%!important;height:100%!important;object-fit:cover;object-position:center bottom}
+/* === 25 ans v2 === */
+.profile-stats{margin:0!important}
+.profile-stats-panel{grid-template-columns:minmax(0,1.15fr) minmax(0,1fr)!important;padding:clamp(32px,3.6vw,52px)!important;gap:clamp(32px,4vw,64px)!important}
+.profile-stats-heading h2{font-size:clamp(1.9rem,2.7vw,2.6rem)!important;line-height:1.08!important;max-width:18ch!important;text-wrap:balance}
+.profile-stats-heading p{font-size:17px!important;max-width:48ch!important}
+.profile-stat-grid{display:grid!important;grid-template-columns:repeat(3,minmax(0,1fr))!important;gap:0!important;margin:0!important;align-items:start}
+.profile-stat{display:flex!important;flex-direction:column-reverse;justify-content:flex-end;gap:8px;padding:4px clamp(14px,1.6vw,24px)!important;border-left:1px solid rgba(3,13,27,.1)!important;min-width:0}
+.profile-stat:first-child{border-left:0!important;padding-left:0!important}
+.profile-stat dd{margin:0!important;font-size:clamp(2rem,3vw,2.9rem)!important;line-height:1!important;letter-spacing:-.04em;white-space:nowrap}
+.profile-stat dt{font-size:15px!important;line-height:1.4!important;color:#4a5566!important}
+@media(max-width:900px){.hero-sticky{grid-template-columns:1fr!important;text-align:center}.hero-copy{margin:0 auto}.hero-summary{margin-left:auto!important;margin-right:auto!important}.hero-actions{justify-content:center!important}.portrait-stage{justify-self:center;max-width:340px}.profile-stats-panel{grid-template-columns:1fr!important}}
+@media(max-width:520px){.profile-stat dd{font-size:1.8rem!important}.profile-stat dt{font-size:14px!important}.profile-stat{padding:4px 10px!important}.portrait-stage{max-width:300px}}
+/* === Projets v2 === */
+.proj.nezo{display:grid!important;grid-template-columns:minmax(0,1fr) minmax(0,1fr)!important;gap:clamp(32px,4vw,64px)!important;align-items:center!important;padding:clamp(32px,3.6vw,52px)!important;min-height:0!important;border-radius:24px!important}
+.proj.nezo>*{grid-column:auto!important;grid-row:auto!important}
+.nezo-copy{display:flex;flex-direction:column;align-items:flex-start;gap:0}
+.proj.nezo .tag{font-size:12.5px!important;letter-spacing:.12em;color:#9fb3cc}
+.proj.nezo h3{margin:12px 0 0!important;font-size:clamp(2rem,3vw,2.8rem)!important;font-weight:600;letter-spacing:-.04em;line-height:1.05}
+.proj.nezo .nezo-aside{margin:18px 0 0!important;padding:0!important;border:0!important;font-size:clamp(19px,1.5vw,22px)!important;line-height:1.4!important;color:#fff!important;max-width:30ch;text-wrap:balance}
+.proj.nezo .nezo-copy>p:not(.nezo-aside){margin:14px 0 0!important;font-size:17px!important;line-height:1.6!important;color:rgba(238,242,247,.72)!important;max-width:42ch}
+.proj.nezo .go{margin-top:28px!important;display:inline-flex!important;align-items:center;min-height:48px;padding:0 24px;border-radius:999px;background:#fff;color:#07101d!important;font:600 15.5px var(--sans)!important;transition:background .2s}
+.proj.nezo:hover .go{background:#e6edf6}
+.nezo-mock{border-radius:20px;background:rgba(255,255,255,.05);border:1px solid rgba(255,255,255,.1);padding:16px;box-shadow:0 30px 60px -30px rgba(0,0,0,.6)}
+.mock-bar{display:flex;gap:6px;margin:0 0 14px 4px}.mock-bar i{width:9px;height:9px;border-radius:50%;background:rgba(255,255,255,.18)}
+.mock-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+.tile{display:flex;flex-direction:column;gap:10px;min-height:118px;padding:16px;border-radius:14px;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.08)}
+.tile b{font:600 13.5px var(--sans);color:#dfe7f1;letter-spacing:-.01em}
+.tile .sk{height:14px;border-radius:7px;background:rgba(255,255,255,.22)}.w70{width:70%}.w55{width:55%}
+.tile .spark{margin-top:auto;height:34px;border-radius:6px;background:linear-gradient(180deg,rgba(127,178,255,.35),transparent);clip-path:polygon(0 80%,15% 60%,30% 70%,48% 40%,62% 50%,80% 22%,100% 8%,100% 100%,0 100%)}
+.tile .spark.s2{clip-path:polygon(0 70%,20% 62%,40% 50%,60% 44%,80% 30%,100% 20%,100% 100%,0 100%)}
+.tile .row{height:10px;border-radius:5px;background:rgba(255,255,255,.14)}.tile .row.short{width:60%}
+.tile .split{margin-top:auto;height:12px;border-radius:6px;background:rgba(255,255,255,.14);overflow:hidden}.tile .split em{display:block;height:100%;width:58%;background:#7fb2ff}
+@media(max-width:860px){.proj.nezo{grid-template-columns:1fr!important}}
+@media(max-width:520px){.proj.nezo{padding:28px 22px!important}.tile{min-height:96px;padding:12px}.proj.nezo .go{align-self:stretch;justify-content:center}}
+/* === Grille posts v2 === */
+.post .txt{font-size:16px!important}
+@media(min-width:701px){.post.noimg:not(.open) .txt{-webkit-line-clamp:11!important}.post.noimg:not(.open) .post-body{flex:1}.post.noimg:not(.open) .actions{margin-top:auto}}
+.proj.nezo .nezo-aside{align-self:flex-start!important;opacity:1!important;letter-spacing:-.015em}
+.profile-stat{flex-direction:column!important}
+.post-grid{align-items:start}
+@media(max-width:1180px) and (min-width:901px){.profile-stats-panel{grid-template-columns:1fr!important;gap:32px!important}.profile-stats-heading h2{max-width:none!important}}
