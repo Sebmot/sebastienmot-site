@@ -3844,3 +3844,8 @@ body.calendly-loading-open {
 .hero-summary{max-width:44ch!important}
 .posts .posts-head .lead,.ideas .ideas-head .lead{max-width:68ch!important;text-wrap:balance}
 .posts .posts-head .lead,.ideas .ideas-head .lead{text-wrap:pretty!important}
+/* Visuels texte : image entière, ratio natif */
+.media.native{aspect-ratio:var(--ar)!important;min-height:0!important;background:transparent}
+.media.native img{object-fit:contain!important;object-position:center!important}
+.post.wide .media.native{align-self:center}
+.post:hover .media.native img{transform:none}
