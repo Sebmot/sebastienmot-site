@@ -38,6 +38,7 @@
   <link rel="stylesheet" href="{{ href('/assets/css/site.css') }}">
   <link rel="stylesheet" href="{{ href('/assets/css/post.css') }}">
   {% for block in head_extra %}{{ block|safe }}{% endfor %}
+<link rel="preload" href="{{ href('/assets/fonts/montserrat-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
 </head>
 <body>
 <a class="skip-link" href="#main">Aller au contenu</a>
@@ -60,7 +61,7 @@
   <div class="footer-inner">
     <div class="footer-top">
       <div class="footer-id">
-        <a class="footer-brand" href="{{ home_href }}">SÉBASTIEN MOT</a>
+        <a class="footer-brand footer-sig" href="{{ home_href }}">SÉBASTIEN MOT <span aria-hidden="true">•</span> ENTREPRENEUR</a>
         <p class="footer-tagline">Entrepreneur libre à Bruxelles. Je partage ce que j'apprends sur l'argent et les décisions.</p>
       </div>
       <nav class="footer-links" aria-label="Liens du pied de page">
