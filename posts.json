@@ -3,6 +3,17 @@
  "posts": [
   {
    "source": "linkedin",
+   "date": "2026-10-17",
+   "dateLabel": "17 oct. 2026",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7517088341532491776/",
+   "image": "img/troisieme-rappel.jpg",
+   "pinned": false,
+   "featured": false,
+   "text": "Troisième rappel envoyé. Toujours rien.\n\nBeaucoup d'entrepreneurs connaissent cette scène. Le client est sympathique, il répond au téléphone, il dit que c'est en cours. Et pendant ce temps, toi, tu paies tes fournisseurs, ta TVA et tes cotisations à l'heure.\n\nMon avis : un client qui ne paie pas n'est pas un client. C'est quelqu'un que tu finances sans le savoir.\n\nLa question que beaucoup se posent sans oser le dire : à partir de quand tu arrêtes de travailler pour un client qui ne t'a pas encore payé ?",
+   "cover": null
+  },
+  {
+   "source": "linkedin",
    "date": "2026-10-16",
    "dateLabel": "16 oct. 2026",
    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7516735797178314752/",
