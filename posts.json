@@ -3,6 +3,17 @@
  "posts": [
   {
    "source": "linkedin",
+   "date": "2026-10-18",
+   "dateLabel": "18 oct. 2026",
+   "url": "https://www.linkedin.com/feed/update/urn:li:activity:7517450802127327232/",
+   "image": "img/prix-fournisseur.jpg",
+   "pinned": false,
+   "featured": false,
+   "text": "Une facture d'un fournisseur habituel. Même produit, même quantité. Le prix a augmenté, sans un mail pour prévenir.\nÇa arrive à beaucoup de petites boîtes. On ne relit plus les factures des fournisseurs de longue date : on paie, on classe.\n\nMon avis : la confiance, ça ne dispense pas de comparer. Les dépenses qu'on ne regarde plus, c'est souvent là que part l'argent.\n\nEt toi, la dernière fois que tu as vraiment comparé les prix de ton fournisseur habituel, c'était quand ?",
+   "cover": null
+  },
+  {
+   "source": "linkedin",
    "date": "2026-10-17",
    "dateLabel": "17 oct. 2026",
    "url": "https://www.linkedin.com/feed/update/urn:li:activity:7517088341532491776/",
