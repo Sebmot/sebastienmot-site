@@ -1,0 +1,465 @@
+/* Sébastien Mot — couche identité premium (oct. 2026). Charge après site.css + post.css */
+
+:root {
+  --poster-bg: #05070c;
+  --poster-card: #0a0e16;
+  --poster-line: rgba(255, 255, 255, 0.09);
+  --poster-muted: rgba(255, 255, 255, 0.55);
+  --poster-body: rgba(255, 255, 255, 0.78);
+  --glow-blue: rgba(47, 111, 224, 0.45);
+  --glow-pink: rgba(224, 51, 143, 0.38);
+  --frame-ar: 16 / 10;
+}
+
+html {
+  color-scheme: dark light;
+}
+
+body {
+  background: var(--poster-bg);
+}
+
+/* ——— Section Posts (accueil + liste) ——— */
+.posts,
+.posts.posts--all,
+.page-posts-list {
+  background:
+    radial-gradient(50% 80% at 0% 0%, rgba(47, 111, 224, 0.12), transparent 55%),
+    radial-gradient(45% 70% at 100% 20%, rgba(224, 51, 143, 0.08), transparent 50%),
+    var(--poster-bg) !important;
+  color: #fff;
+  border-bottom: 1px solid var(--poster-line);
+}
+
+.posts .kicker,
+.posts--all .kicker {
+  color: var(--poster-muted) !important;
+}
+
+.posts .lead,
+.posts--all .lead {
+  color: var(--poster-body) !important;
+}
+
+.posts .h2,
+.posts--all .h2 {
+  color: #fff !important;
+}
+
+/* ——— Carte post (grille accueil) ——— */
+.post-grid {
+  align-items: stretch !important;
+  gap: clamp(18px, 2.2vw, 26px) !important;
+}
+
+.post {
+  height: 100%;
+  min-height: 0;
+  background: var(--poster-card) !important;
+  border: 1px solid var(--poster-line) !important;
+  border-radius: 20px !important;
+  box-shadow:
+    0 1px 0 rgba(255, 255, 255, 0.04) inset,
+    0 28px 56px -32px rgba(0, 0, 0, 0.65) !important;
+  overflow: hidden;
+  transition:
+    transform 0.45s cubic-bezier(0.2, 0.8, 0.2, 1),
+    border-color 0.35s ease,
+    box-shadow 0.45s ease;
+}
+
+.post:hover {
+  transform: translateY(-5px) !important;
+  border-color: rgba(47, 111, 224, 0.35) !important;
+  box-shadow:
+    0 0 0 1px rgba(47, 111, 224, 0.15),
+    0 36px 72px -28px rgba(47, 111, 224, 0.22) !important;
+}
+
+.post-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  gap: 10px;
+  padding: clamp(16px, 2vw, 22px) !important;
+}
+
+.post h3 {
+  min-height: 0 !important;
+  color: #fff !important;
+  font-family: var(--brand-font, Montserrat, var(--sans)) !important;
+  font-weight: 700 !important;
+  font-size: clamp(1.05rem, 1.35vw, 1.2rem) !important;
+  line-height: 1.28 !important;
+  -webkit-line-clamp: 3;
+  line-clamp: 3;
+  letter-spacing: -0.02em;
+}
+
+.post .txt {
+  min-height: 0 !important;
+  white-space: normal !important;
+  color: var(--poster-body) !important;
+  -webkit-line-clamp: 3 !important;
+  line-clamp: 3;
+  font-size: 15px !important;
+  line-height: 1.55 !important;
+}
+
+.post .meta {
+  color: var(--poster-muted) !important;
+}
+
+.post .actions {
+  margin-top: auto !important;
+  border-top-color: var(--poster-line) !important;
+}
+
+.post .btn-more {
+  color: #fff !important;
+}
+
+.post .src-link {
+  color: var(--poster-muted) !important;
+}
+
+.post .src-link:hover {
+  color: #fff !important;
+}
+
+/* Visuel post : cadre 16:10, fond affiche, image ENTIÈRE */
+.post .media {
+  flex-shrink: 0;
+  aspect-ratio: var(--frame-ar) !important;
+  min-height: 0 !important;
+  margin: 0 !important;
+  background:
+    radial-gradient(120% 90% at 0% 100%, var(--glow-blue), transparent 55%),
+    radial-gradient(120% 90% at 100% 100%, var(--glow-pink), transparent 55%),
+    #000 !important;
+}
+
+.post .media img {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: contain !important;
+  object-position: center center !important;
+  transform: none !important;
+  transition: transform 0.6s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.post:hover .media img {
+  transform: scale(1.02) !important;
+}
+
+.post .media--native {
+  aspect-ratio: var(--frame-ar) !important;
+}
+
+/* Fallback affiche (pas d’image fichier) */
+.post .media--poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: clamp(20px, 4vw, 32px);
+}
+
+.poster-inner {
+  text-align: center;
+  max-width: 92%;
+}
+
+.poster-big {
+  display: block;
+  font-family: var(--brand-font, Montserrat, var(--sans));
+  font-weight: 800;
+  font-size: clamp(1.5rem, 3vw, 2.2rem);
+  line-height: 1.05;
+  letter-spacing: -0.03em;
+  color: #fff;
+  text-wrap: balance;
+}
+
+.poster-small {
+  display: block;
+  margin-top: 10px;
+  font: 500 11px var(--mono);
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--poster-muted);
+}
+
+.media--poster-minimal .ico {
+  width: 48px;
+  height: 48px;
+  border-radius: 12px;
+  opacity: 0.95;
+}
+
+/* À la une */
+.feat {
+  background: var(--poster-card) !important;
+  border-color: var(--poster-line) !important;
+  border-radius: 24px !important;
+}
+
+.feat-body {
+  color: #fff;
+}
+
+.feat h3 {
+  color: #fff !important;
+}
+
+.feat .txt {
+  color: var(--poster-body) !important;
+}
+
+.feat .badge {
+  color: var(--poster-muted) !important;
+}
+
+/* ——— Archive /posts/ ——— */
+.posts-archive {
+  max-width: 1140px !important;
+}
+
+@media (min-width: 900px) {
+  .posts-archive {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: clamp(18px, 2.2vw, 26px) !important;
+  }
+
+  .posts-archive li {
+    display: flex;
+    min-width: 0;
+  }
+}
+
+.archive-card {
+  flex: 1;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  min-height: 0;
+  padding: 0 !important;
+  overflow: hidden;
+  background: var(--poster-card) !important;
+  border: 1px solid var(--poster-line) !important;
+  border-radius: 20px !important;
+  color: #fff;
+  box-shadow: 0 28px 56px -32px rgba(0, 0, 0, 0.55);
+  transition: transform 0.4s ease, border-color 0.3s ease, box-shadow 0.4s ease;
+}
+
+.archive-card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(47, 111, 224, 0.35) !important;
+  box-shadow: 0 0 0 1px rgba(47, 111, 224, 0.12), 0 32px 64px -28px rgba(47, 111, 224, 0.2) !important;
+}
+
+.archive-card__body {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  gap: 8px;
+  padding: clamp(16px, 2vw, 22px);
+}
+
+.archive-media {
+  aspect-ratio: var(--frame-ar);
+  margin: 0;
+  overflow: hidden;
+  background:
+    radial-gradient(120% 90% at 0% 100%, var(--glow-blue), transparent 55%),
+    radial-gradient(120% 90% at 100% 100%, var(--glow-pink), transparent 55%),
+    #000;
+}
+
+.archive-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  object-position: center;
+}
+
+.archive-card .meta-line {
+  color: var(--poster-muted) !important;
+}
+
+.archive-card h2 {
+  color: #fff !important;
+}
+
+.archive-card h2 a {
+  color: inherit !important;
+}
+
+.archive-card .excerpt {
+  color: var(--poster-body) !important;
+}
+
+.archive-actions {
+  margin-top: auto !important;
+  border-top-color: var(--poster-line) !important;
+}
+
+.back-home a {
+  color: var(--poster-muted) !important;
+}
+
+.back-home a:hover {
+  color: #fff !important;
+}
+
+/* ——— Article ——— */
+.page-post {
+  background:
+    radial-gradient(45% 60% at 100% 0%, rgba(47, 111, 224, 0.1), transparent 50%),
+    var(--poster-bg) !important;
+  color: #eef2f7;
+}
+
+.post-single-head h1 {
+  color: #fff !important;
+  font-family: var(--brand-font, Montserrat, var(--sans)) !important;
+  font-weight: 800 !important;
+}
+
+.post-single .meta-line,
+.post-single .kicker a {
+  color: var(--poster-muted) !important;
+}
+
+.post-single-body {
+  color: rgba(255, 255, 255, 0.88) !important;
+}
+
+.post-single-media {
+  border-color: var(--poster-line) !important;
+  background:
+    radial-gradient(120% 90% at 0% 100%, var(--glow-blue), transparent 55%),
+    #000 !important;
+}
+
+.post-single-media img {
+  max-height: min(78vh, 820px);
+  object-fit: contain !important;
+  width: 100%;
+  height: auto;
+}
+
+.post-single-foot {
+  border-top-color: var(--poster-line) !important;
+}
+
+.related {
+  border-top-color: var(--poster-line) !important;
+}
+
+.related-list a {
+  background: var(--poster-card) !important;
+  border-color: var(--poster-line) !important;
+  color: #fff !important;
+}
+
+/* ——— 25 ans : garder le contraste clair ——— */
+.profile-stats {
+  background: var(--canvas, #edf1f4) !important;
+}
+
+/* ——— Bloc build / projets sur fond sombre global ——— */
+.build {
+  background: var(--poster-bg) !important;
+}
+
+.build .h2,
+.build .lead {
+  color: #fff;
+}
+
+.build .lead {
+  color: var(--poster-body) !important;
+}
+
+/* ——— 404 ——— */
+.page-404 .post-single {
+  text-align: center;
+}
+
+.page-404 .nf-actions {
+  justify-content: center;
+}
+
+.page-404 .related-list {
+  max-width: 480px;
+  margin: 0 auto;
+}
+
+/* ——— Motion ——— */
+.post.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.7s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.post.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+.archive-card.reveal {
+  opacity: 0;
+  transform: translateY(18px);
+  transition:
+    opacity 0.65s cubic-bezier(0.2, 0.8, 0.2, 1),
+    transform 0.65s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+
+.archive-card.reveal.is-visible {
+  opacity: 1;
+  transform: none;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .post.reveal,
+  .archive-card.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+
+  .post:hover {
+    transform: none !important;
+  }
+}
+
+/* Annule la couche PR#6 (cartes blanches / cover) */
+.post .media.native {
+  background:
+    radial-gradient(120% 90% at 0% 100%, var(--glow-blue), transparent 55%),
+    radial-gradient(120% 90% at 100% 100%, var(--glow-pink), transparent 55%),
+    #000 !important;
+}
+
+.post .media.native img {
+  object-fit: contain !important;
+}
+
+@media (min-width: 701px) {
+  .post.noimg:not(.open) .txt {
+    -webkit-line-clamp: 3 !important;
+    line-clamp: 3;
+  }
+}
+
+@media (min-width: 861px) {
+  .footer-tagline {
+    white-space: normal !important;
+    max-width: 42ch !important;
+  }
+}

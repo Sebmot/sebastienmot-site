@@ -318,7 +318,9 @@ def verify_links(dist: Path, base_path: str, posts: list[dict]) -> None:
     for asset in (
         "assets/css/site.css",
         "assets/css/post.css",
+        "assets/css/brand-2026.css",
         "assets/js/home.js",
+        "assets/js/motion.js",
         "assets/js/posts-sort.js",
         "assets/js/posts-archive.js",
     ):

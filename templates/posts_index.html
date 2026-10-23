@@ -9,12 +9,18 @@
     </header>
     <ol class="posts-archive" id="posts-archive">
       {% for p in posts %}
-      <li data-source="{{ p.source }}"><article class="archive-card">
+      <li data-source="{{ p.source }}"><article class="archive-card reveal">
+        {% if p.image %}
+        <figure class="archive-media"><img src="{{ href('/' ~ p.image) }}" alt="" width="{{ p.image_width or '' }}" height="{{ p.image_height or '' }}" loading="lazy" decoding="async"></figure>
+        {% elif p.cover %}
+        <figure class="archive-media archive-media--poster" aria-hidden="true"><div class="poster-inner"><span class="poster-big">{{ p.cover.big|fr }}</span>{% if p.cover.small %}<span class="poster-small">{{ p.cover.small|fr }}</span>{% endif %}</div></figure>
+        {% endif %}
+        <div class="archive-card__body">
         <p class="meta-line"><span class="src {{ p.source }}">{{ p.source_label }}</span> · <time datetime="{{ p.date_iso }}">{{ p.dateLabel }}</time>{% if p.pinned %} · <span class="pin">Épinglé</span>{% endif %}</p>
-        {% if p.figure %}<p class="figure"><b>{{ p.figure.big }}</b><span>{{ p.figure.small }}</span></p>{% endif %}
         <h2><a href="{{ href('/posts/' ~ p.slug ~ '/') }}">{{ p.title|fr }}</a></h2>
         {% if p.card_excerpt %}<p class="excerpt">{{ p.card_excerpt|fr }}</p>{% endif %}
         <p class="archive-actions"><a class="btn-more" href="{{ href('/posts/' ~ p.slug ~ '/') }}">Lire la suite <span aria-hidden="true">→</span></a><a class="src-link" href="{{ p.url }}" target="_blank" rel="noreferrer">Voir sur {{ p.source_label }} ↗</a></p>
+        </div>
       </article></li>
       {% endfor %}
     </ol>

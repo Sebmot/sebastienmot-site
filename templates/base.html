@@ -37,6 +37,7 @@
   <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700&display=swap" rel="stylesheet">
   <link rel="stylesheet" href="{{ href('/assets/css/site.css') }}">
   <link rel="stylesheet" href="{{ href('/assets/css/post.css') }}">
+  <link rel="stylesheet" href="{{ href('/assets/css/brand-2026.css') }}">
   {% for block in head_extra %}{{ block|safe }}{% endfor %}
 <link rel="preload" href="{{ href('/assets/fonts/montserrat-latin.woff2') }}" as="font" type="font/woff2" crossorigin>
 </head>
@@ -75,5 +76,6 @@
   </div>
 </footer>
 {% for block in body_scripts %}{{ block|safe }}{% endfor %}
+<script src="{{ href('/assets/js/motion.js') }}" defer></script>
 </body>
 </html>
