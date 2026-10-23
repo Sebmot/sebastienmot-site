@@ -19,6 +19,7 @@ PAGES = [
 VIEWPORTS = [
     ("desktop-1440", 1440, 900),
     ("laptop-1280", 1280, 800),
+    ("mobile-390", 390, 844),
     ("mobile-430", 430, 932),
     ("mobile-360", 360, 780),
 ]
@@ -34,6 +35,20 @@ def main(prefix: str) -> None:
             for slug, path in PAGES:
                 page.goto(f"{BASE}{path}", wait_until="networkidle", timeout=60000)
                 page.wait_for_timeout(400)
+                page.evaluate(
+                    """async () => {
+                      const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+                      document.documentElement.classList.add('is-loaded');
+                      const h = document.documentElement.scrollHeight;
+                      for (let y = 0; y <= h; y += Math.max(400, window.innerHeight * 0.85)) {
+                        window.scrollTo(0, y);
+                        await sleep(80);
+                      }
+                      window.scrollTo(0, 0);
+                      document.querySelectorAll('.sig-reveal').forEach((el) => el.classList.add('is-in'));
+                      await sleep(350);
+                    }"""
+                )
                 dest = OUT / f"{prefix}-{slug}-{vname}.png"
                 page.screenshot(path=str(dest), full_page=True)
                 print(dest)
