@@ -464,3 +464,138 @@ body {
     max-width: 42ch !important;
   }
 }
+
+/* ——— Typo : Montserrat (titres) + Manrope (corps) uniquement ——— */
+:root {
+  --mono: var(--sans);
+  --font-mono: var(--sans);
+}
+
+body,
+p,
+.lead,
+.txt,
+.excerpt,
+.post-single-body,
+.idea p,
+.hero-summary,
+.profile-stats-heading p,
+.archive-card .excerpt,
+.post .txt {
+  font-family: var(--sans) !important;
+}
+
+.kicker,
+.meta,
+.meta-line,
+.meta .pin,
+.feat .badge,
+.feat .badge .d,
+.filters button,
+.poster-small,
+.related-meta,
+.related-title,
+.src,
+.post .meta,
+.archive-card .meta-line,
+.footer-legal,
+.btn-more,
+.src-link {
+  font-family: var(--sans) !important;
+  font-weight: 600;
+}
+
+.h2,
+h1,
+h2,
+h3,
+.post h3,
+.feat h3,
+.idea h3,
+.profile-stats-heading h2,
+.build > .h2,
+.cta h2,
+.post-single-head h1,
+.sig-page-hero h1,
+.sig-page-hero .h2,
+.hero h1,
+.poster-big,
+.site-header .brand,
+.footer-sig,
+.proj.nezo h3 {
+  font-family: var(--brand-font, "Montserrat"), var(--sans) !important;
+}
+
+/* ——— Zéro bande grise : poster noir partout ——— */
+.ideas {
+  background:
+    radial-gradient(50% 70% at 0% 100%, rgba(47, 111, 224, 0.12), transparent 60%),
+    radial-gradient(45% 65% at 100% 100%, rgba(224, 51, 143, 0.1), transparent 55%),
+    var(--poster-bg) !important;
+  border-top: 1px solid var(--poster-line) !important;
+}
+
+.ideas .lead,
+.ideas .h2 {
+  color: #fff !important;
+}
+
+.ideas .lead {
+  color: var(--poster-body) !important;
+}
+
+.page-posts-list,
+.posts.posts--all,
+.page-post,
+main.page-post {
+  background: var(--poster-bg) !important;
+}
+
+html[data-header-tone="light"] .site-header,
+html[data-header-tone="dark"] .site-header {
+  background: rgba(5, 7, 12, 0.88) !important;
+  border-color: rgba(255, 255, 255, 0.1) !important;
+  box-shadow: 0 12px 40px -16px rgba(0, 0, 0, 0.65) !important;
+}
+
+html[data-header-tone="light"] .site-header .brand,
+html[data-header-tone="light"] .site-header nav a,
+html[data-header-tone="light"] .site-header nav a.is-active {
+  color: #fff !important;
+}
+
+html[data-header-tone="light"] .site-header nav a.is-active {
+  background: rgba(255, 255, 255, 0.12) !important;
+  box-shadow: none !important;
+}
+
+html[data-header-tone="light"] .nav-contact {
+  background: #fff !important;
+  color: #05070c !important;
+}
+
+html[data-header-tone="light"] .nav-menu summary {
+  background: rgba(255, 255, 255, 0.1) !important;
+  border-color: rgba(255, 255, 255, 0.15) !important;
+}
+
+html[data-header-tone="light"] .nav-menu summary span {
+  background: #fff !important;
+}
+
+/* Affiche fallback HTML (sans logo réseau) */
+.media--poster .poster-big {
+  font-family: var(--brand-font, "Montserrat"), var(--sans) !important;
+  text-transform: uppercase;
+  font-weight: 800;
+  font-size: clamp(1.25rem, 2.8vw, 1.75rem);
+  line-height: 1.1;
+  color: #fff;
+}
+
+.archive-media--poster {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 32px;
+}

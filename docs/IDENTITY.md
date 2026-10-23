@@ -33,7 +33,7 @@ radial-gradient(42% 70% at 100% 100%, rgba(190,30,110,.45–.55), transparent 70
 |-------|--------|------------|
 | Marque, kickers, titres de section | **Montserrat** (woff2 local) | `font-weight: 700–800`, **MAJUSCULES**, tracking serré sur gros titres |
 | Corps, UI | **Manrope** | 16–18px, line-height ~1.6 |
-| Méta (dates, sources) | **DM Mono** | 11–12px, uppercase, letter-spacing |
+| Méta (dates, sources) | **Manrope** (600) | 11–12px, uppercase, letter-spacing |
 
 Titres de section : classe `.h2` — Montserrat 800, caps, mots en `em.accent` bleu ou `.pink`.
 

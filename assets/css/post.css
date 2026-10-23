@@ -1,7 +1,6 @@
 .page-posts-list,
 .page-post {
   padding: var(--sec) var(--gutter);
-  background: var(--canvas);
 }
 
 .posts--all .posts-head {

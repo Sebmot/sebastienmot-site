@@ -81,12 +81,13 @@ function mediaHtml(p, title) {
     const imgStyle = p.image_position ? ` style="object-position:${esc(p.image_position)}"` : "";
     return `<figure class="media media--native" style="--ar:${ar}"><img src="${imgPath}" alt="${esc(title)}"${size}${imgStyle} loading="lazy" decoding="async"></figure>`;
   }
-  if (p.cover) {
-    return `<figure class="media media--poster" aria-hidden="true"><div class="poster-inner"><span class="poster-big">${esc(p.cover.big)}</span>${
-      p.cover.small ? `<span class="poster-small">${esc(p.cover.small)}</span>` : ""
-    }</div></figure>`;
-  }
-  return `<figure class="media media--poster media--poster-minimal" aria-hidden="true">${ICON[p.source]}</figure>`;
+  return posterFallbackHtml(title, p.cover);
+}
+
+function posterFallbackHtml(title, cover) {
+  const headline = cover?.big ? esc(cover.big) : esc(title);
+  const sub = cover?.small ? `<span class="poster-small">${esc(cover.small)}</span>` : "";
+  return `<figure class="media media--poster" aria-hidden="true"><div class="poster-inner"><span class="poster-big">${headline}</span>${sub}</div></figure>`;
 }
 
 /* Une ligne pour que le line-clamp affiche bien l’ellipse. */

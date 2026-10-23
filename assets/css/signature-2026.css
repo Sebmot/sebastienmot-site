@@ -365,17 +365,15 @@ html[data-header-tone="dark"] .site-header {
 }
 
 /* ---------- Scroll reveal ---------- */
+/* Contenu toujours visible ; animation légère uniquement à l’entrée */
 .has-sig-motion .sig-reveal {
-  opacity: 0;
-  transform: translate3d(0, 28px, 0);
-  transition:
-    opacity var(--sig-duration) var(--sig-ease),
-    transform var(--sig-duration) var(--sig-ease);
+  opacity: 1;
+  transform: none;
+  transition: transform var(--sig-duration) var(--sig-ease);
   transition-delay: var(--sig-delay, 0ms);
 }
 
 .has-sig-motion .sig-reveal.is-in {
-  opacity: 1;
   transform: none;
 }
 

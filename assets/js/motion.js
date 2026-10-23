@@ -3,21 +3,7 @@
   const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
   root.classList.add("has-sig-motion");
 
-  const hero = document.querySelector(".hero");
-  if (hero) {
-    root.dataset.headerTone = "dark";
-    if ("IntersectionObserver" in window) {
-      const toneIo = new IntersectionObserver(
-        ([entry]) => {
-          root.dataset.headerTone = entry.isIntersecting ? "dark" : "light";
-        },
-        { threshold: 0.12, rootMargin: "-72px 0px 0px 0px" }
-      );
-      toneIo.observe(hero);
-    }
-  } else {
-    root.dataset.headerTone = "dark";
-  }
+  root.dataset.headerTone = "dark";
 
   /* Ne pas masquer des sections entières (grille posts invisible hors viewport). */
   const revealSelectors = [
@@ -45,6 +31,7 @@
 
   revealTargets.forEach((el, i) => {
     el.style.setProperty("--sig-delay", `${Math.min(i % 6, 5) * 70}ms`);
+    el.classList.add("is-in");
   });
 
   const markIn = (el) => el.classList.add("is-in");
@@ -94,9 +81,8 @@
 
     const observeCard = (node) => {
       if (!(node instanceof HTMLElement) || !node.classList.contains("post")) return;
-      node.classList.add("sig-reveal");
+      node.classList.add("sig-reveal", "is-in");
       if (cardIo) cardIo.observe(node);
-      else markIn(node);
     };
     grid.querySelectorAll(".post").forEach(observeCard);
     const mo = new MutationObserver((mutations) => {
