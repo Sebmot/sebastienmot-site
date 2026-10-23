@@ -3963,3 +3963,5 @@ em.accent.pink{color:#ff4fa3}
 .hero .hero-sticky{max-width:1600px;margin:0 auto!important;background:radial-gradient(45% 75% at 0% 100%,rgba(47,111,224,.6),transparent 70%),radial-gradient(42% 70% at 100% 100%,rgba(190,30,110,.55),transparent 70%),#000!important}
 @media(max-width:900px){.hero .hero-sticky{grid-template-columns:1fr!important}}
 .site-header{background:rgba(8,10,16,.86)!important}
+
+/* Grille posts v5 retirée — voir assets/css/brand-2026.css */

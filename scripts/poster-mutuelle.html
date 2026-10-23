@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="utf-8">
+  <style>
+    @font-face {
+      font-family: "Montserrat";
+      src: url("../assets/fonts/montserrat-latin.woff2") format("woff2");
+      font-weight: 100 900;
+      font-style: normal;
+    }
+    * { box-sizing: border-box; margin: 0; }
+    body {
+      width: 1280px;
+      height: 800px;
+      overflow: hidden;
+      font-family: "Montserrat", sans-serif;
+      color: #fff;
+      background: #05070c;
+    }
+    .wrap {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      padding: 72px 80px;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+    }
+    .wrap::before,
+    .wrap::after {
+      content: "";
+      position: absolute;
+      border-radius: 50%;
+      filter: blur(60px);
+      pointer-events: none;
+    }
+    .wrap::before {
+      width: 70%;
+      height: 55%;
+      left: -15%;
+      bottom: -20%;
+      background: rgba(47, 111, 224, 0.55);
+    }
+    .wrap::after {
+      width: 60%;
+      height: 50%;
+      right: -12%;
+      bottom: -18%;
+      background: rgba(224, 51, 143, 0.45);
+    }
+    .tag {
+      position: relative;
+      z-index: 1;
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: 0.22em;
+      text-transform: uppercase;
+      color: rgba(255, 255, 255, 0.45);
+      margin-bottom: 48px;
+    }
+    h1 {
+      position: relative;
+      z-index: 1;
+      font-weight: 800;
+      font-size: 52px;
+      line-height: 1.12;
+      letter-spacing: -0.02em;
+      text-transform: uppercase;
+      max-width: 14ch;
+      text-wrap: balance;
+    }
+    .line2 {
+      display: block;
+      margin-top: 20px;
+      color: #2f6fe0;
+    }
+    .line3 {
+      display: block;
+      margin-top: 12px;
+      font-size: 64px;
+      color: #e0338f;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrap">
+    <p class="tag">Finances d'entrepreneur</p>
+    <h1>
+      Cinq demandes de remboursement à la mutuelle.
+      <span class="line3">Cinq refus.</span>
+    </h1>
+  </div>
+</body>
+</html>

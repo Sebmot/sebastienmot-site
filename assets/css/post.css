@@ -1,7 +1,6 @@
 .page-posts-list,
 .page-post {
   padding: var(--sec) var(--gutter);
-  background: var(--canvas);
 }
 
 .posts--all .posts-head {
@@ -116,7 +115,7 @@ html:not(.js) .posts--all .filters{display:none}
 .posts-archive h2{margin:0;display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;font-size:clamp(1.2rem,2vw,1.45rem);line-height:1.25;letter-spacing:-.03em;text-wrap:balance}
 .posts-archive h2 a{color:var(--ink);text-decoration:none}
 .posts-archive h2 a:hover{text-decoration:underline;text-decoration-thickness:1px;text-underline-offset:4px}
-.posts-archive .excerpt{margin:0;white-space:pre-line;font-size:16px;line-height:1.55;color:var(--slate);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden}
+.posts-archive .excerpt{margin:0;white-space:normal;font-size:16px;line-height:1.55;color:var(--slate);display:-webkit-box;-webkit-line-clamp:3;-webkit-box-orient:vertical;overflow:hidden;text-overflow:ellipsis}
 .posts-archive .pin{color:var(--slate)}
 .archive-actions{display:flex;justify-content:space-between;align-items:center;gap:16px;margin:4px 0 0;padding-top:14px;border-top:1px solid var(--line)}
 .posts--all .more-wrap{display:flex;justify-content:center;margin-top:28px}
