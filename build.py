@@ -162,12 +162,12 @@ def fr_nbsp(text: str) -> str:
     return re.sub(r"«[ \u00a0]+", "«\u00a0", text)
 
 
-def card_excerpt(body: str, limit: int = 260) -> str:
-    """Extrait pour cartes : lignes conservées, lignes vides et liens seuls retirés."""
+def card_excerpt(body: str, limit: int = 220) -> str:
+    """Extrait pour cartes : texte sur une ligne, coupure propre avec « … »."""
     lines = [ln.strip() for ln in body.split("\n")]
     lines = [ln for ln in lines if ln and not re.fullmatch(r"https?://\S+", ln)]
-    text = "\n".join(lines)
-    return text if len(text) <= limit else text[:limit].rstrip() + "…"
+    text = re.sub(r"\s+", " ", " ".join(lines)).strip()
+    return clip(text, limit)
 
 
 def assign_slugs(posts: list[dict]) -> list[dict]:

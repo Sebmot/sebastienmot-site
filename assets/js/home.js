@@ -73,23 +73,34 @@ function renderFeat() {
 }
 
 function mediaHtml(p, title) {
-  if (!p.image) return "";
-  const imgPath = bp(p.image.startsWith("/") ? p.image : `/${p.image}`);
-  const size = p.image_width ? ` width="${p.image_width}" height="${p.image_height}"` : "";
-  const nat = !p.image_position && p.image_width ? ` native" style="--ar:${p.image_width}/${p.image_height}` : "";
-  return `<figure class="media${nat}"><img src="${imgPath}" alt="${esc(title)}"${size}${p.image_position ? ` style="object-position:${esc(p.image_position)}"` : ""} loading="lazy" decoding="async"></figure>`;
+  if (p.image) {
+    const imgPath = bp(p.image.startsWith("/") ? p.image : `/${p.image}`);
+    const size = p.image_width ? ` width="${p.image_width}" height="${p.image_height}"` : "";
+    const pos = p.image_position ? `object-position:${esc(p.image_position)};` : "";
+    const style = pos ? ` style="${pos}"` : "";
+    return `<figure class="media"><img src="${imgPath}" alt="${esc(title)}"${size}${style} loading="lazy" decoding="async"></figure>`;
+  }
+  if (hasFigure(p)) {
+    return `<figure class="media media--placeholder media--figure" aria-hidden="true"><p class="media-ph-figure"><b>${esc(p.cover.big)}</b><span>${esc(p.cover.small || "")}</span></p></figure>`;
+  }
+  return `<figure class="media media--placeholder" aria-hidden="true">${ICON[p.source]}</figure>`;
 }
+
+/* Une ligne pour que le line-clamp affiche bien l’ellipse. */
+const excerptCard = (b) =>
+  excerpt(b)
+    .replace(/\s*\n+\s*/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
 
 function card(p, i) {
   const [t, b] = split(p);
   const el = document.createElement("article");
-  el.className = "post" + (p.image ? "" : " noimg");
+  el.className = "post";
   el.style.animationDelay = (i % PAGE) * 50 + "ms";
   const href = postHref(p);
-  const ex = excerpt(b);
-  const fig = hasFigure(p)
-    ? `<p class="figure"><b>${esc(p.cover.big)}</b><span>${esc(p.cover.small)}</span></p>`
-    : "";
+  const ex = excerptCard(b);
+  const fig = "";
   el.innerHTML =
     mediaHtml(p, t) +
     `<div class="post-body"><div class="meta">${ICON[p.source]}<span>${NAME[p.source]} · ${esc(p.dateLabel)}</span>${p.pinned ? '<span class="pin">Épinglé</span>' : ""}</div>
@@ -110,7 +121,6 @@ function render() {
   const limit = Math.max(0, pages * PAGE - (featShown ? 1 : 0));
   const visible = list.slice(0, limit);
   visible.forEach((p, i) => g.appendChild(card(p, i)));
-  if (visible.length % 2 === 1 && g.lastElementChild) g.lastElementChild.classList.add("wide");
   const rest = list.length - visible.length;
   const btnLoad = document.getElementById("btn-load");
   if (btnLoad) {
