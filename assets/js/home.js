@@ -99,7 +99,7 @@ const excerptCard = (b) =>
 function card(p, i) {
   const [t, b] = split(p);
   const el = document.createElement("article");
-  el.className = "post reveal";
+  el.className = "post";
   el.style.animationDelay = (i % PAGE) * 50 + "ms";
   const href = postHref(p);
   const ex = excerptCard(b);
@@ -131,7 +131,6 @@ function render() {
     btnLoad.textContent = "Voir plus";
     btnLoad.setAttribute("aria-label", `Voir ${Math.min(PAGE, rest)} posts de plus`);
   }
-  document.dispatchEvent(new Event("posts-rendered"));
 }
 
 const btnLoad = document.getElementById("btn-load");

@@ -64,6 +64,8 @@ Titres de section : classe `.h2` — Montserrat 800, caps, mots en `em.accent` b
 | Contact | Affiche noire | Colonne liens glass |
 | Footer | `#000` | Pilules liens |
 
+Voir aussi **[DESIGN-DIRECTION.md](DESIGN-DIRECTION.md)** (couche signature 2026 : mesh hero, nav adaptative, motion).
+
 ## Ce qu’il faut éviter
 
 - Cartes blanches uniformes, ombres grises « Bootstrap / WordPress ».

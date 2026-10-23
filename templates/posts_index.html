@@ -1,6 +1,6 @@
 <main id="main" class="page-posts-list">
   <section class="posts posts--all">
-    <header class="posts-head">
+    <header class="sig-page-hero posts-head">
       <div>
         <p class="kicker">Posts</p>
         <h1 class="h2">Tous les posts</h1>
@@ -9,9 +9,9 @@
     </header>
     <ol class="posts-archive" id="posts-archive">
       {% for p in posts %}
-      <li data-source="{{ p.source }}"><article class="archive-card reveal">
+      <li data-source="{{ p.source }}"><article class="archive-card">
         {% if p.image %}
-        <figure class="archive-media"><img src="{{ href('/' ~ p.image) }}" alt="" width="{{ p.image_width or '' }}" height="{{ p.image_height or '' }}" loading="lazy" decoding="async"></figure>
+        <figure class="archive-media"><img src="{{ href('/' ~ p.image) }}" alt=""{% if p.image_width %} width="{{ p.image_width }}" height="{{ p.image_height }}"{% endif %} loading="lazy" decoding="async"></figure>
         {% elif p.cover %}
         <figure class="archive-media archive-media--poster" aria-hidden="true"><div class="poster-inner"><span class="poster-big">{{ p.cover.big|fr }}</span>{% if p.cover.small %}<span class="poster-small">{{ p.cover.small|fr }}</span>{% endif %}</div></figure>
         {% endif %}
