@@ -3,6 +3,20 @@
   "posts": [
     {
       "source": "linkedin",
+      "date": "2026-10-24",
+      "dateLabel": "24 oct. 2026",
+      "url": "https://www.linkedin.com/feed/update/urn:li:activity:7519626758040637440/",
+      "image": null,
+      "pinned": false,
+      "featured": false,
+      "text": "Je sors d'un rendez-vous client.\n\nOn lui a conseillé de se verser un gros salaire.\nObjectif : passer de 25 % à 20 % d'impôt des sociétés.\n\nSur le papier, il gagne 5 %.\n\nDans la réalité, il paie 40 % de précompte.\nSes cotisations sociales grimpent.\nEt le cash en trop finit sur un compte épargne à 0,15 %.\n\n« Oui, mais c'est déductible. »\n\nPour avoir ce taux réduit, il faut se verser au moins 45 000 € par an.\nPour beaucoup de petits entrepreneurs, c'est énorme.\nEt c'est là que le piège se referme.\n\nUne stratégie qui avait du sens il y a 5 ans n'en a peut-être plus aujourd'hui.\n\nEt toi, quand as-tu revu ta rémunération pour la dernière fois ?",
+      "cover": {
+        "big": "40 %",
+        "small": "de précompte sur un gros salaire"
+      }
+    },
+    {
+      "source": "linkedin",
       "date": "2026-10-23",
       "dateLabel": "23 oct. 2026",
       "url": "https://www.linkedin.com/feed/update/urn:li:activity:7519262094211321856/",
